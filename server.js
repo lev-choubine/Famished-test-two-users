@@ -53,7 +53,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/profile', isLoggedIn, (req, res) => {
-  res.render('profile');
+  console.log('!!!!!!!!!!!!!!!!!' + JSON.stringify(req.user)) 
+  res.render('profile', {pass: req.user.name});
 });
 
 

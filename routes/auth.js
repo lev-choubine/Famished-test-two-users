@@ -15,7 +15,40 @@ router.get('/login', (req, res) => {
 
 router.post('/signup', (req, res) => {
   console.log(req.body);
+  if(req.body.seller==='on'){
+    console.log('Yatta!')
+    ////////////////////////////////////////
+    db.seller.findOrCreate({
+      where: { email: req.body.email },
+      defaults: {
+        name: req.body.name,
+        password: req.body.password
+      }
+    })
+    .then(([seller, created]) => {
+      if (created) {
+        // if created, success and redirect back to home
+        console.log(`${seller.name} was created`);
+        // Flash Message
+        const successObject = {
+          successRedirect: '/',
+          successFlash: 'Account created and logging in...'
+        }
+        passport.authenticate('local', successObject)(req, res);
+      } else {
+        // Email already exists
+        req.flash('error', 'Email already exists...')
+        res.redirect('/auth/signup');
+      }
+    })
+    .catch(err => {
+      console.log('Error', err);
+      req.flash('error', 'Either email or password is incorrect. Please try again.');
+      res.redirect('/auth/signup');
+    })
 
+  }else{
+  ////////////////////////////////////////////////////////////////
   db.user.findOrCreate({
     where: { email: req.body.email },
     defaults: {
@@ -43,9 +76,10 @@ router.post('/signup', (req, res) => {
     console.log('Error', err);
     req.flash('error', 'Either email or password is incorrect. Please try again.');
     res.redirect('/auth/signup');
-  })
+  })}
+////////////////////////////////////////////////////////////////////////////////////  
 });
-
+////////////////////////////////////////////////////////////////////////////////////
 router.post('/login', passport.authenticate('local', {
   
   successRedirect: '/',
