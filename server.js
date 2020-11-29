@@ -53,8 +53,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/profile', isLoggedIn, (req, res) => {
-  console.log('!!!!!!!!!!!!!!!!!' + JSON.stringify(req.user)) 
-  res.render('profile', {pass: req.user.name});
+  console.log('!!!!!!!!!!!!!!!!!' + JSON.stringify(req.user))
+  if(req.user.type){
+    res.render('seller_profle', {pass: req.user.name})
+  } else {
+    res.render('profile', {pass: req.user.name});
+  }
+  
 });
 
 

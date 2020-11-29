@@ -22,7 +22,8 @@ router.post('/signup', (req, res) => {
       where: { email: req.body.email },
       defaults: {
         name: req.body.name,
-        password: req.body.password
+        password: req.body.password,
+        type: 'seller'
       }
     })
     .then(([seller, created]) => {
@@ -54,6 +55,7 @@ router.post('/signup', (req, res) => {
     defaults: {
       name: req.body.name,
       password: req.body.password
+  
     }
   })
   .then(([user, created]) => {
