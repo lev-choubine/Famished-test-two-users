@@ -16,7 +16,7 @@ router.get('/login', (req, res) => {
 router.post('/signup', (req, res) => {
   console.log(req.body);
   if(req.body.seller==='on'){
-    console.log('Yatta!')
+  
     ////////////////////////////////////////
     db.seller.findOrCreate({
       where: { email: req.body.email },
@@ -29,7 +29,7 @@ router.post('/signup', (req, res) => {
     .then(([seller, created]) => {
       if (created) {
         // if created, success and redirect back to home
-        console.log(`${seller.name} was created`);
+      
         // Flash Message
         const successObject = {
           successRedirect: '/',
@@ -61,7 +61,7 @@ router.post('/signup', (req, res) => {
   .then(([user, created]) => {
     if (created) {
       // if created, success and redirect back to home
-      console.log(`${user.name} was created`);
+     
       // Flash Message
       const successObject = {
         successRedirect: '/',

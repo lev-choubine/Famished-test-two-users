@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
 console.log(SECRET_SESSION);
 const app = express();
+const db = require('./models');
 
 // isLoggedIn middleware
 const isLoggedIn = require('./middleware/isLoggedIn');
@@ -53,21 +54,39 @@ app.get('/', (req, res) => {
 });
 
 app.get('/profile', isLoggedIn, (req, res) => {
-  console.log('!!!!!!!!!!!!!!!!!' + JSON.stringify(req.user))
+  
   if(req.user.type){
+    
     res.render('seller_profle', {pass: req.user.name})
   } else {
-    res.render('profile', {pass: req.user.name});
+    db.user_profile.findOne({
+      where: {user_id : req.user.id}
+    })
+    .then(
+      prof => {
+        let street = JSON.stringify(prof.street)
+        let city = JSON.stringify(prof.city)
+        let state = JSON.stringify(prof.state)
+        let zip = JSON.stringify(prof.zip)
+        res.render('profile', {pass: req.user.name, street, city, state, zip});
+      }
+    )
+    .catch(err=>{console.log(err)})
+    
+    
   }
   
 });
 
 
 app.use('/auth', require('./routes/auth'));
+app.use('/address', require('./routes/address'));
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
 });
+
+
 
 module.exports = server;

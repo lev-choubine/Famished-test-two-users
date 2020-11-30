@@ -1,1 +1,52 @@
+<style>
+    form {
+        text-align: center;
+    }
+    input {
+        margin:  4px;
+    }
+
+    #container {
+        margin-top: 50px;
+        width:200px;
+    }
+</style>
+
+
+
 <h3>Welcome to your SELLER PROFILE</h3>
+<%= pass %>
+
+<div id="container">
+    <form action="/address/profile" method="POST">
+        <label for="userBusiness">Street Address</label>
+        <br/>
+        <input id="userBusiness" type="text" name="business">
+        <br/>
+        <label for="userInfo">Street Address</label>
+        <br/>
+        <input id="userInfo" type="text" name="info">
+        <br/>
+        <label for="userImage">Street Address</label>
+        <br/>
+        <input id="userImage" type="text" name="image">
+        <br/>
+        <label for="userStreet">Street Address</label>
+        <br/>
+        <input id="userStreet" type="text" name="street">
+        <br/>
+        <label for="userCity">City</label>
+        <br/>
+        <input id="userCity" type="text" name="city">
+        <br/>
+        <label for="userState">State</label>
+        <br/>
+        <input id="userState" type="text" name="state">
+        <br/>
+        <label for="userZip">ZIP code</label>
+        <br/>
+        <input id="userZip" type="text" name="zip">
+        <br/>
+        <input type="submit">
+      </form>
+    </div>
