@@ -85,9 +85,21 @@ app.get('/profile', isLoggedIn, (req, res) => {
         let city = JSON.stringify(prof.city)
         let state = JSON.stringify(prof.state)
         let zip = JSON.stringify(prof.zip)
-        res.render('profile', {pass: req.user.name, street, city, state, zip});
-      }
-    )
+        
+////////////////
+db.items.findAll().then(finds => {
+   console.log('!!!!!!!!'+JSON.stringify(finds))
+   let find = finds
+   res.render('profile', {pass: req.user.name, street, city, state, zip, find});
+  }
+
+)
+
+
+////////////////
+
+    
+})
     .catch(err=>{console.log(err)})
     
     

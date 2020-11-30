@@ -52,18 +52,24 @@
 <div class="container">
 <h2>SELECT YOUR ITEM HERE</h2>
 <form action="/user_food/profile" method="POST">
-    <label for="typeId">Type Id Here</label>
-    <br/>
-    <input id="typeId" type="text" name="typeId">
-    <br/>
+  
+   
+   
     <label for="type">Type</label>
     <br/>
     <select name = "type">
-        <option value = "Burger" selected>Burger</option>
-        <option value = "Taco">Taco</option>
-        <option value = "Pizza">Pizza</option>
-     </select>
+    <% find.forEach((f) => {
+        %>     
+        <option value = "<%= f.type %>" selected><%= f.type %></option>
+       
+   
+        <% }) %>
 
+      
+       
+    
+     </select>
+     <input id="typeId" type="hidden" name="typeId" value="158158">
      <br/>
     <label for="price">Price</label>
     <br/>
