@@ -6,7 +6,7 @@
         margin:  4px;
     }
 
-    #container {
+    .container {
         margin-top: 50px;
         width:200px;
     }
@@ -26,7 +26,7 @@
 <%= state %>
 <br/>
 <%= zip %>
-<div id="container">
+<div class="container">
 <form action="/address/profile" method="POST">
   
     <!-- name is the key that this data will enter our app at; it should match up to the fields we want to save on our dino -->
@@ -48,4 +48,27 @@
     <br/>
     <input type="submit">
   </form>
+</div>
+<div class="container">
+<h2>SELECT YOUR ITEM HERE</h2>
+<form action="/user_food/profile" method="POST">
+    <label for="typeId">Type Id Here</label>
+    <br/>
+    <input id="typeId" type="text" name="typeId">
+    <br/>
+    <label for="type">Type</label>
+    <br/>
+    <select name = "type">
+        <option value = "Burger" selected>Burger</option>
+        <option value = "Taco">Taco</option>
+        <option value = "Pizza">Pizza</option>
+     </select>
+
+     <br/>
+    <label for="price">Price</label>
+    <br/>
+    <input id="price" type="text" name="price">
+    <br/>
+<input type="submit">
+</form>
 </div>

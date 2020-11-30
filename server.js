@@ -99,7 +99,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
 app.use('/auth', require('./routes/auth'));
 app.use('/address', require('./routes/address'));
 app.use('/seller_address', require('./routes/seller_address'));
-
+app.use('/user_food', require('./routes/user_food'));
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
