@@ -4,16 +4,18 @@ const db = require('../models');
 
 router.post('/profile', function(req, res) {
     console.log('attemting to post');
-    db.user_profile.findOrCreate({
+    db.seller_profile.findOrCreate({
       where: {
-        user_id: req.user.id,
-        name: req.user.name,
+        seller_id: req.user.id,
+        business_name: req.body.business,
+        description: req.body.info,
+        image: req.body.image,
         street: req.body.street,
         city: req.body.city,
         state: req.body.state,
-        zip: req.body.zip
-
-       
+        zip: req.body.zip,
+        open_at: req.body.open,
+        closes_at:req.body.close
         
       } 
     }).then((user  =>{

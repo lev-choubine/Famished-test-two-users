@@ -56,8 +56,25 @@ app.get('/', (req, res) => {
 app.get('/profile', isLoggedIn, (req, res) => {
   
   if(req.user.type){
+    db.seller_profile.findOne({
+      where: {seller_id : req.user.id}
+    })
+    .then(
+      prof => {
+        let business = JSON.stringify(prof.business_name)
+        let info = JSON.stringify(prof.description)
+        let image = JSON.stringify(prof.image)
+        let street = JSON.stringify(prof.street)
+        let city = JSON.stringify(prof.city)
+        let state = JSON.stringify(prof.state)
+        let zip = JSON.stringify(prof.zip)
+        let open = JSON.stringify(prof.open_at)
+        let close = JSON.stringify(prof.closes_at)
+        res.render('seller_profile', {pass: req.user.name, business, info, image, street, city, state, zip, open, close});
+      }
+    )
+    .catch(err=>{console.log(err)})
     
-    res.render('seller_profle', {pass: req.user.name})
   } else {
     db.user_profile.findOne({
       where: {user_id : req.user.id}
@@ -81,6 +98,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
 
 app.use('/auth', require('./routes/auth'));
 app.use('/address', require('./routes/address'));
+app.use('/seller_address', require('./routes/seller_address'));
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

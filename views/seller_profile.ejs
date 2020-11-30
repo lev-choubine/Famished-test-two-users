@@ -17,17 +17,36 @@
 <h3>Welcome to your SELLER PROFILE</h3>
 <%= pass %>
 
+<h4>Business Details</h4>
+<%= business %>
+<br/>
+<%= info %>
+<br/>
+<%= image %>
+<br/>
+<%= street %>
+<br/>
+<%= city %>
+<br/>
+<%= state %>
+<br/>
+<%= zip %>
+<br/>
+<%= open %>
+<br/>
+<%= close %>
+
 <div id="container">
-    <form action="/address/profile" method="POST">
-        <label for="userBusiness">Street Address</label>
+    <form action="/seller_address/seller_profile" method="POST">
+        <label for="userBusiness">Business Name</label>
         <br/>
         <input id="userBusiness" type="text" name="business">
         <br/>
-        <label for="userInfo">Street Address</label>
+        <label for="userInfo">Business Info</label>
         <br/>
         <input id="userInfo" type="text" name="info">
         <br/>
-        <label for="userImage">Street Address</label>
+        <label for="userImage">Image or Logo</label>
         <br/>
         <input id="userImage" type="text" name="image">
         <br/>
@@ -47,6 +66,15 @@
         <br/>
         <input id="userZip" type="text" name="zip">
         <br/>
+        <label for="userOpen">Opens at</label>
+        <br/>
+        <input id="userOpen" type="text" name="open">
+        <br/>
+        <label for="userClose">Closes at</label>
+        <br/>
+        <input id="userClose" type="text" name="close">
+        <br/>
+        
         <input type="submit">
       </form>
     </div>
