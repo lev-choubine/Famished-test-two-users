@@ -9,6 +9,8 @@ const SECRET_SESSION = process.env.SECRET_SESSION;
 console.log(SECRET_SESSION);
 const app = express();
 const db = require('./models');
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 // isLoggedIn middleware
 const isLoggedIn = require('./middleware/isLoggedIn');
@@ -70,11 +72,24 @@ app.get('/profile', isLoggedIn, (req, res) => {
         let zip = JSON.stringify(prof.zip)
         let open = JSON.stringify(prof.open_at)
         let close = JSON.stringify(prof.closes_at)
-        res.render('seller_profile', {pass: req.user.name, business, info, image, street, city, state, zip, open, close});
+        
+      
+      db.items.findAll().then(finds => {
+        let find = finds
+        db.seller_has.findAll({
+         where: {seller_id : req.user.id}
+       }).then(picks=>{
+         console.log('!!!!!!!!!!'+JSON.stringify(picks))
+         let pick = picks
+         res.render('seller_profile', {pass: req.user.name, business, info, image, street, city, state, zip, open, close, find, pick});
+       })
+       })
+
       }
     )
+    ////////////////////////////////////////////////////////////////////
     .catch(err=>{console.log(err)})
-    
+  /////////////////////////////////////////////////////////////////////  
   } else {
     db.user_profile.findOne({
       where: {user_id : req.user.id}
@@ -86,17 +101,23 @@ app.get('/profile', isLoggedIn, (req, res) => {
         let state = JSON.stringify(prof.state)
         let zip = JSON.stringify(prof.zip)
         
-////////////////
+////////////////////////////////////////////////////////////////////////
 db.items.findAll().then(finds => {
-   console.log('!!!!!!!!'+JSON.stringify(finds))
    let find = finds
-   res.render('profile', {pass: req.user.name, street, city, state, zip, find});
+   db.user_wants.findAll({
+    where: {user_id : req.user.id}
+  }).then(picks=>{
+    console.log('!!!!!!!!!!'+JSON.stringify(picks))
+    let pick = picks
+    console.log('!!!!!!!!!!'+JSON.stringify(picks))
+    res.render('profile', {pass: req.user.name, street, city, state, zip, find, pick});
+  })
   }
-
+/////////////////////////////////////////////////////////////////////////
 )
+///////////////////////////////////////////////////////////////////////
 
-
-////////////////
+/////////////////////////////////////////////////////////////////////////
 
     
 })
@@ -107,11 +128,60 @@ db.items.findAll().then(finds => {
   
 });
 
+app.get('/profile/finds',(req,res)=>{
+  db.user_profile.findOne({
+    where: {user_id : req.user.id}
+  })
+  .then(
+    prof => {
+      let street = JSON.stringify(prof.street)
+      let city = JSON.stringify(prof.city)
+      let state = JSON.stringify(prof.state)
+      let zip = JSON.stringify(prof.zip)
+      
+////////////////////////////////////////////////////////////////////////
+db.items.findAll().then(finds => {
+ let find = finds
+ db.user_wants.findAll({
+  where: {user_id : req.user.id}
+}).then(picks=>{
+ 
+  let pick = picks
+  ////////////////////////////////////////////////
+  db.seller_has.findAll({
+    where: {type:'Taco', price:{[Op.lte] : 5}}
+})
+.then(finds => {
+let find = finds
+console.log('!!!!!!!!!!'+JSON.stringify(picks))
+res.render('finds', {pass: req.user.name, street, city, state, zip, find, pick, find})
+}
+
+)
+.catch(console.error)
+///////////////////////////////////////////////////////////////
+ 
+})
+}
+/////////////////////////////////////////////////////////////////////////
+)
+///////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////
+
+  
+})
+  .catch(err=>{console.log(err)})
+  
+  
+  
+})
 
 app.use('/auth', require('./routes/auth'));
 app.use('/address', require('./routes/address'));
 app.use('/seller_address', require('./routes/seller_address'));
 app.use('/user_food', require('./routes/user_food'));
+app.use('/seller_food', require('./routes/seller_food'));
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);

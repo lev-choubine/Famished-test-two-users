@@ -26,6 +26,13 @@
 <%= state %>
 <br/>
 <%= zip %>
+
+<h4> You are looking for</h4>
+<% pick.forEach((p)=>{ %>
+
+<p><%= p.type %> for $<%= p.price %> </p>
+<% })  %>
+<a href="/profile/finds">See your option here</a>
 <div class="container">
 <form action="/address/profile" method="POST">
   

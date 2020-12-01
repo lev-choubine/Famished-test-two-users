@@ -6,7 +6,7 @@
         margin:  4px;
     }
 
-    #container {
+    .container {
         margin-top: 50px;
         width:200px;
     }
@@ -36,7 +36,13 @@
 <br/>
 <%= close %>
 
-<div id="container">
+<h4> You are offering</h4>
+<% pick.forEach((p)=>{ %>
+
+<p><%= p.type %> for $<%= p.price %> </p>
+<% })  %>
+
+<div class="container">
     <form action="/seller_address/seller_profile" method="POST">
         <label for="userBusiness">Business Name</label>
         <br/>
@@ -78,3 +84,47 @@
         <input type="submit">
       </form>
     </div>
+
+    <div class="container">
+        <h2>SELECT YOUR ITEM HERE</h2>
+        <form action="/seller_food/profile" method="POST">
+            <label for="sellerName">Vendor Name</label>
+            <br/>
+            <input id="sellerName" type="text" name="sellerName">
+            <br/>
+            <label for="typeInfo">Discribe your Product</label>
+            <br/>
+            <input id="typeInfo" type="text" name="typeInfo">
+            <br/>
+            <label for="typeImage">Image</label>
+            <br/>
+            <input id="typeImage" type="text" name="typeImage">
+            <br/>
+            <input id="typeIdd" type="hidden" name="typeIdd" value="158158">
+            <br/>
+            
+           
+            <label for="type"> Type</label>
+            <br/>
+            <select name = "type">
+            <% find.forEach((f) => {
+                %>     
+                <option value = "<%= f.type %>" selected><%= f.type %></option>
+               
+           
+                <% }) %>
+        
+              
+               
+            
+             </select>
+             <br/>
+            <label for="price">Price</label>
+            <br/>
+            <input id="price" type="text" name="price">
+            <br/>
+        <input type="submit">
+        </form>
+        </div>
+ 
+
