@@ -157,49 +157,75 @@ app.get('/profile/finds', async (req,res) => {
   const picks = await db.user_wants.findAll({
     where: {user_id : req.user.id}
   })
+
   let found = []
 
  for (let i=0; i <picks.length; i++){
     const find = await  db.seller_has.findAll({
+      
       where: {type: picks[i].type, price:{[Op.lte]:picks[i].price}}
     })
+    if(find[0] !== undefined ){
+      
+      // console.log('&&&&&&&&&&&&&&&&&&&&& empty $$$$$$$$$$$$$$$$$$$$$')
+      let userProfile = await db.user_profile.findOne({
+        where: {user_id : req.user.id}
+      })
+      let street = plusWord(userProfile.dataValues.street);
+      let city = plusWord(userProfile.dataValues.city);
+      let state = plusWord(userProfile.dataValues.state);
+      let zip =userProfile.dataValues.zip
+      /////////////////////////////////////////////////////
+   
+      // if(find[0]!== undefined){
+       
+     
+   
+      //////////////////////////////////////////////////////////  
+      for(let a =0; a <find.length; a++){
+      /////////////////////////////////////////////////
+      let id = find[a].seller_id
+     
+      let sellerProfile = await db.seller_profile.findOne({
+        where: {seller_id : id} 
+      })
+     
+      ///////////////get seller details to run the API/////////////////
+  
+      let streetSeller = plusWord(sellerProfile.dataValues.street);
+      let citySeller = plusWord(sellerProfile.dataValues.city);
+      let stateSeller = plusWord(sellerProfile.dataValues.state);
+      let zipSeller =sellerProfile.dataValues.zip
+      
+      let distanceURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+street+"+"+city+","+state+"+"+zip+"&destinations="+streetSeller+"+"+citySeller+","+stateSeller+"+"+zipSeller+"&key="+API_KEY;
+      ////////////////////////////////////////////////////////
+   await axios.get(distanceURL )
+   .then(async response => {
+     let apiResults = await response.data.rows[0].elements[0].distance.text
+     let reso = await apiResults.slice(0,apiResults.length-3);
+     distance = await parseFloat(reso)
+     
+     return distance;
+   }).catch(err=>{console.log(err)});
+  
+  
+      if(distance < range) {
+        found=found.concat(find[a]) 
+        console.log("@@@@@@@@@@@ " + distance);
+      }
+
+
+      }
+      
+
+  
+  }else{
+    
+  }
+    // console.log("!!!!!"+JSON.stringify(find[0]))
   /////////////////////////////////////////////////////////////////////////////////////////
     ////////////////get user details to run the API////////////////////
-    let userProfile = await db.user_profile.findOne({
-      where: {user_id : req.user.id}
-    })
-    let street = plusWord(userProfile.dataValues.street);
-    let city = plusWord(userProfile.dataValues.city);
-    let state = plusWord(userProfile.dataValues.state);
-    let zip =userProfile.dataValues.zip
-    /////////////////////////////////////////////////////
-    let id = find[0].id
-    let sellerProfile = await db.seller_profile.findOne({
-      where: {seller_id : id} 
-    })
-   
-    /////////////////get seller details to run the API/////////////////
 
-    let streetSeller = plusWord(sellerProfile.dataValues.street);
-    let citySeller = plusWord(sellerProfile.dataValues.city);
-    let stateSeller = plusWord(sellerProfile.dataValues.state);
-    let zipSeller =sellerProfile.dataValues.zip
-    
-    let distanceURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+street+"+"+city+","+state+"+"+zip+"&destinations="+streetSeller+"+"+citySeller+","+stateSeller+"+"+zipSeller+"&key="+API_KEY;
-    ////////////////////////////////////////////////////////
- await axios.get(distanceURL )
- .then(async response => {
-   let apiResults = await response.data.rows[0].elements[0].distance.text
-   let reso = await apiResults.slice(0,apiResults.length-3);
-   distance = await parseFloat(reso)
-   console.log('@@@@@@@@@@@'+distance);
-   return distance;
- }).catch(err=>{console.log(err)});
-
-
-    if(distance < range) {
-      found=found.concat(find) 
-    }
     
   }
 

@@ -31,6 +31,10 @@
 <% pick.forEach((p)=>{ %>
 
 <p><%= p.type %> for $<%= p.price %> </p>
+<form method="POST" action="/address/profile/?_method=DELETE">
+    <input hidden type="text" name="type" value="<%= p.type %>">
+    <button class="btn btn-primary" type="submit" id="button">Delete from Favorites</button>
+</form>
 <% })  %>
 <a href="/profile/finds">See your option here</a>
 <div class="container">

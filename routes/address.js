@@ -41,6 +41,21 @@ router.put('/profile', function(req, res) {
     }))
     
   });
+
+  router.delete('/profile', function(req, res) {
+    
+    db.user_wants.destroy({
+      where: {
+        type: req.body.type,
+        user_id : req.user.id
+      } 
+    }).then((it  =>{
+      console.log(`Removing ${it.name} from our database.`)
+      res.redirect('/profile')
+    })).catch((err)=>{
+      console.log(err);
+    })
+  })
   
 
   module.exports = router;
