@@ -3,16 +3,16 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('seller_profiles', [
-      { seller_id: 1,
-        business_name: "Lev's Chicken Feet",
-        description: "Authentinc Non-exsistant cuisine",
+      { seller_id: 2,
+        business_name: "Yuichi's Pizza",
+        description: "Authentinc Japanese Pizza Trucks",
         image: "My Pic Here",
-        street: "430 St Nicholas Ave",
+        street: "180 Ludlow Street",
         city: "New York",
         state: "NY",
-        zip: 10027,
-        open_at: 2,
-        closes_at: 6,
+        zip: 10002,
+        open_at: 1,
+        closes_at: 7,
         createdAt: new Date(),
         updatedAt: new Date()
       }

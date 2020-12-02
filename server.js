@@ -133,70 +133,17 @@ app.get('/profile/finds', async (req,res) => {
     where: {user_id : req.user.id}
   })
   let found = []
-  picks.forEach( async (p) =>{
+
+ for (let i=0; i <picks.length; i++){
     const find = await  db.seller_has.findAll({
-      where: {type: p.type, price:{[Op.lte]:p.price}}
+      where: {type: picks[i].type, price:{[Op.lte]:picks[i].price}}
     })
-    found=found.concat(find)    
+    found=found.concat(find) 
+  }
+    res.render('finds', {found})  
   })
- console.log('@@@@@@@@@@@@@'+found)
 
-///////////////////////////////////////////  
-//   db.user_profile.findOne({
-//     where: {user_id : req.user.id}
-//   })
-//   //////////1st THEN///////////////////////
-//   .then(
-//     prof => {
-//       let street = JSON.stringify(prof.street)
-//       let city = JSON.stringify(prof.city)
-//       let state = JSON.stringify(prof.state)
-//       let zip = JSON.stringify(prof.zip)
-//       db.items.findAll().then(finds => {
-//  let find = finds
-//  db.user_wants.findAll({
-//   where: {user_id : req.user.id}
-//   /////////////2nd NESTED THEN////////////////
-// }).then(picks=>{
-//   let found = []
-//   let test = 0
-//   let pick = picks
-//   pick.forEach(p => {
-//     db.seller_has.findAll({
-//       where: {type:p.type, price:{[Op.lte] : p.price}}
-//   })
-//   ////////////3rd NESTED THEN//////////////////
-//   .then(finds => {
-//   console.log(JSON.stringify(found))
-//   found.push(finds)
-//   test = test +1
-//   console.log('A'+test)
-//   }
-//   /////////////3rd NESTED THEN
-//   )
-//   console.log('B'+test)
-
-//   });
   
-//   console.log('@@@@@@@@'+found);
-  
-  
-// res.render('finds', {pass: req.user.name, street, city, state, zip, find, pick, found})
-// /////////////2nd NESTED THEN//////////////
-// })
-// ////////////////////////////////////
-// }
-// /////////////////////////////////////////////////////////////////////////
-// )
-// ///////////////////////////////////////////////////////////////////////
-
-// /////////////////////////////////1ST THEN////////////////
-// })
-//   .catch(err=>{console.log(err)})
-  
-  
-  
-})
 
 app.use('/auth', require('./routes/auth'));
 app.use('/address', require('./routes/address'));
