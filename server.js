@@ -6,7 +6,9 @@ const session = require('express-session');
 const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
-console.log(SECRET_SESSION);
+const API_KEY = process.env.API_KEY;
+
+const axios = require('axios'); 
 const app = express();
 const db = require('./models');
 const Sequelize = require('sequelize')
@@ -30,6 +32,13 @@ const sessionObject = {
   secret: SECRET_SESSION,
   resave: false,
   saveUninitialized: true
+}
+
+function plusWord(string){
+  let arr = string.split(' ')
+  let newString = arr.join("+")
+  return newString;
+
 }
 
 app.use(session(sessionObject));
@@ -79,7 +88,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
         db.seller_has.findAll({
          where: {seller_id : req.user.id}
        }).then(picks=>{
-         console.log('!!!!!!!!!!'+JSON.stringify(picks))
+        
          let pick = picks
          res.render('seller_profile', {pass: req.user.name, business, info, image, street, city, state, zip, open, close, find, pick});
        })
@@ -107,9 +116,9 @@ db.items.findAll().then(finds => {
    db.user_wants.findAll({
     where: {user_id : req.user.id}
   }).then(picks=>{
-    console.log('!!!!!!!!!!'+JSON.stringify(picks))
+   
     let pick = picks
-    console.log('!!!!!!!!!!'+JSON.stringify(picks))
+    
     res.render('profile', {pass: req.user.name, street, city, state, zip, find, pick});
   })
   }
@@ -127,8 +136,22 @@ db.items.findAll().then(finds => {
   }
   
 });
-
+///////////////////////////////FOR METHOD TO DISPLAY FINDS FOR THE USER///////////////////
 app.get('/profile/finds', async (req,res) => {
+  let distance;
+  let range = 3;
+  //////////////////API FETCH///////////////////////////////////////////////////////////////
+
+  
+
+  ///////////////////////////////////////////////////////
+ 
+  // // Use request to call the API
+
+ 
+    ////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////         Matching Options By Price              ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   const picks = await db.user_wants.findAll({
     where: {user_id : req.user.id}
   })
@@ -138,8 +161,47 @@ app.get('/profile/finds', async (req,res) => {
     const find = await  db.seller_has.findAll({
       where: {type: picks[i].type, price:{[Op.lte]:picks[i].price}}
     })
-    found=found.concat(find) 
+  /////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////get user details to run the API////////////////////
+    let userProfile = await db.user_profile.findOne({
+      where: {user_id : req.user.id}
+    })
+    let street = plusWord(userProfile.dataValues.street);
+    let city = plusWord(userProfile.dataValues.city);
+    let state = plusWord(userProfile.dataValues.state);
+    let zip =userProfile.dataValues.zip
+    /////////////////////////////////////////////////////
+    let id = find[0].id
+    let sellerProfile = await db.seller_profile.findOne({
+      where: {seller_id : id} 
+    })
+   
+    /////////////////get seller details to run the API/////////////////
+
+    let streetSeller = plusWord(sellerProfile.dataValues.street);
+    let citySeller = plusWord(sellerProfile.dataValues.city);
+    let stateSeller = plusWord(sellerProfile.dataValues.state);
+    let zipSeller =sellerProfile.dataValues.zip
+    
+    let distanceURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+street+"+"+city+","+state+"+"+zip+"&destinations="+streetSeller+"+"+citySeller+","+stateSeller+"+"+zipSeller+"&key="+API_KEY;
+    ////////////////////////////////////////////////////////
+ await axios.get(distanceURL )
+ .then(async response => {
+   let apiResults = await response.data.rows[0].elements[0].distance.text
+   let reso = await apiResults.slice(0,apiResults.length-3);
+   distance = await parseFloat(reso)
+   console.log('@@@@@@@@@@@'+distance);
+   return distance;
+ }).catch(err=>{console.log(err)});
+
+
+    if(distance < range) {
+      found=found.concat(find) 
+    }
+    
   }
+
+    
     res.render('finds', {found})  
   })
 
