@@ -7,6 +7,7 @@ const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
 const API_KEY = process.env.API_KEY;
+const methodOverride = require('method-override');
 
 const axios = require('axios'); 
 const app = express();
@@ -42,7 +43,8 @@ function plusWord(string){
 }
 
 app.use(session(sessionObject));
-
+app.use(express.urlencoded({extended: false}))
+app.use(methodOverride('_method'));
 // Initialize passport and run through middleware
 app.use(passport.initialize());
 app.use(passport.session());

@@ -13,6 +13,15 @@ router.get('/login', (req, res) => {
   res.render('auth/login');
 });
 
+router.get('/user_address', (req,res)=>{
+  res.render('user_address')
+})
+
+router.get('/seller_address', (req,res)=>{
+  res.render('seller_address')
+})
+
+
 router.post('/signup', (req, res) => {
   console.log(req.body);
   if(req.body.seller==='on'){
@@ -32,7 +41,7 @@ router.post('/signup', (req, res) => {
       
         // Flash Message
         const successObject = {
-          successRedirect: '/',
+          successRedirect: '/auth/seller_address',/////////////////////////problem here!!
           successFlash: 'Account created and logging in...'
         }
         passport.authenticate('local', successObject)(req, res);
@@ -64,7 +73,7 @@ router.post('/signup', (req, res) => {
      
       // Flash Message
       const successObject = {
-        successRedirect: '/',
+        successRedirect: '/auth/user_address',//////////////////////////////SHOULD REDIRECT TO THE ADDRESS DETAILS!
         successFlash: 'Account created and logging in...'
       }
       passport.authenticate('local', successObject)(req, res);
