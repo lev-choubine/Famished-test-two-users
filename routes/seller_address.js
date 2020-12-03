@@ -24,7 +24,8 @@ router.put('/profile', function(req, res) {
             state: req.body.state,
             zip: req.body.zip,
             open_at: req.body.open,
-            closes_at:req.body.close 
+            closes_at:req.body.close,
+            website: req.body.website 
         })
       console.log(`Storing your address into the database!!`)
       res.redirect('/profile')
@@ -45,13 +46,16 @@ router.put('/profile', function(req, res) {
         state: req.body.state,
         zip: req.body.zip,
         open_at: req.body.open,
-        closes_at:req.body.close
+        closes_at:req.body.close,
+        website: req.body.website 
         
       } 
     }).then((user  =>{
       console.log(`Storing your address into the database!!`)
       res.redirect('/profile')
-    }))
+    })).catch((err)=>{
+      console.log(err);
+    })
     
   });
 

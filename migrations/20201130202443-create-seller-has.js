@@ -29,6 +29,33 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER
       },
+    seller_info: {
+      type: Sequelize.STRING
+    },
+    seller_image: {
+      type: Sequelize.STRING
+    },
+    seller_street: {
+      type: Sequelize.STRING
+    },
+    seller_city: {
+      type: Sequelize.STRING
+    },
+    seller_state: {
+      type: Sequelize.STRING
+    },
+    seller_zip: {
+      type: Sequelize.INTEGER
+    },
+    seller_open: {
+      type: Sequelize.INTEGER
+    },
+    seller_close: {
+      type: Sequelize.INTEGER
+    },
+    seller_website: {
+      type: Sequelize.STRING
+    },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

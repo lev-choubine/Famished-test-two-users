@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.STRING,
     zip: DataTypes.INTEGER,
     open_at: DataTypes.INTEGER,
-    closes_at: DataTypes.INTEGER
+    closes_at: DataTypes.INTEGER,
+    website: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'seller_profile',

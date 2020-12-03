@@ -85,6 +85,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
         let zip = JSON.stringify(prof.zip)
         let open = JSON.stringify(prof.open_at)
         let close = JSON.stringify(prof.closes_at)
+        let website = JSON.stringify(prof.website)
         
       
       db.items.findAll().then(finds => {
@@ -94,7 +95,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
        }).then(picks=>{
         
          let pick = picks
-         res.render('seller_profile', {pass: req.user.name, business, info, image, street, city, state, zip, open, close, find, pick});
+         res.render('seller_profile', {pass: req.user.name, business, info, image, street, city, state, zip, open, close, find, pick, website});
        })
        })
 

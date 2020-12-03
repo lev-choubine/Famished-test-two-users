@@ -38,6 +38,9 @@ module.exports = {
       closes_at: {
         type: Sequelize.INTEGER
       },
+      website: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
