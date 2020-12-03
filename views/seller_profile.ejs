@@ -22,7 +22,9 @@
 <br/>
 <%= info %>
 <br/>
-<%= image %>
+
+<img src="<%= image %>"  width="100px"/>
+<%  console.log('!!!!!!!' + image)%>
 <br/>
 <%= street %>
 <br/>
@@ -39,7 +41,14 @@
 <h4> You are offering</h4>
 <% pick.forEach((p)=>{ %>
 
-<p><%= p.type %> for $<%= p.price %> </p>
+<p><%= p.type %> for $<%= p.price %> </p> 
+<image src="<%= p.type_image %>" width="150px" />
+<form action="/seller_address/profile_foodpic" method="POST" enctype="multipart/form-data">
+    <input type="file" name="inputFile2">
+    <input type="hidden" name="id" value="<%= p.id %>">
+    <input type="submit" class="btn btn-primary">
+
+</form>
 <form method="POST" action="/seller_address/profile/?_method=DELETE">
     <input hidden type="text" name="type" value="<%= p.type %>">
     <button class="btn btn-primary" type="submit" id="button">Delete from Favorites</button>
@@ -56,10 +65,7 @@
         <br/>
         <input id="userInfo" type="text" name="info">
         <br/>
-        <label for="userImage">Image or Logo</label>
-        <br/>
-        <input id="userImage" type="text" name="image">
-        <br/>
+       
         <label for="userStreet">Street Address</label>
         <br/>
         <input id="userStreet" type="text" name="street">
@@ -87,6 +93,14 @@
         
         <input type="submit">
       </form>
+    </form>
+   
+    
+    <h1>Upload Your Profile Picture Here</h1>
+   <form action="/seller_address/profile_profilepic" method="POST" enctype="multipart/form-data">
+    <input type="file" name="inputFile">
+    <input type="submit" class="btn btn-primary">
+</form>
     </div>
 
     <div class="container">
@@ -102,7 +116,7 @@
             <br/>
             <label for="typeImage">Image</label>
             <br/>
-            <input id="typeImage" type="text" name="typeImage">
+            <input id="typeImage" type="hidden" name="typeImage" value="https://res.cloudinary.com/delivery-com/image/fetch/w_380,h_285,c_fill,f_auto/https%3A%2F%2Fs3.amazonaws.com%2Fs3.delivery.com%2Fimages%2Fplaceholder%2Ffood.png">
             <br/>
             <input id="typeIdd" type="hidden" name="typeIdd" value="158158">
             <br/>
@@ -114,6 +128,9 @@
             <% find.forEach((f) => {
                 %>     
                 <option value = "<%= f.type %>" selected><%= f.type %></option>
+                <h2>Your image here</h2>
+              
+                   </div>
                
            
                 <% }) %>
@@ -129,6 +146,11 @@
             <br/>
         <input type="submit">
         </form>
+        <h1>Upload Your Profile Picture Here</h1>
+        <form action="/seller_address/profile" method="POST" enctype="multipart/form-data">
+         <input type="file" name="inputFile2">
+         <input type="submit" class="btn btn-primary">
+     </form>
         </div>
  
 

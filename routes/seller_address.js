@@ -1,7 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-
+const multer = require('multer');
+const cloudinary = require('cloudinary');
+const uploads =multer({ dest: './uploads'})
+const ejsLayouts = require('express-ejs-layouts');
 router.put('/profile', function(req, res) {
     console.log('attemting to post');
     db.seller_profile.findOne({
@@ -15,7 +19,6 @@ router.put('/profile', function(req, res) {
             seller_id: req.user.id,
             business_name: req.body.business,
             description: req.body.info,
-            image: req.body.image,
             street: req.body.street,
             city: req.body.city,
             state: req.body.state,
@@ -66,5 +69,48 @@ router.put('/profile', function(req, res) {
       console.log(err);
     })
   })
-  
+///////////////////////////////////////////////////////////////
+router.post('/profile_profilepic', uploads.single('inputFile'),(req, res)=>{
+  console.log('On POST route');
+  let file = req.file.path;
+  cloudinary.uploader.upload(file,(result) =>{
+    console.log(file)
+     console.log(result);
+//render result page with image
+db.seller_profile.findOne({
+  where: { seller_id : req.user.id}
+  }).then((user)  =>{
+      user.update ({
+          image: result.url
+      })
+     res.redirect('/profile')
+  })
+})
+}) 
+////////////////////////////////////////////////////////////
+router.post('/profile_foodpic', uploads.single('inputFile2'),(req, res)=>{
+  console.log('On POST route');
+  let file = req.file.path;
+  cloudinary.uploader.upload(file,(result) =>{
+    console.log(file)
+     console.log(result);
+//render result page with image
+db.seller_has.findOne({
+  where: { id : req.body.id}
+  }).then((user)  =>{
+      user.update ({
+        type_image: result.url
+      })
+     res.redirect('/profile')
+  })
+})
+}) 
+
+// router.get('/:url',(req, res) => {
+     
+// })
+
+
+   
   module.exports = router;
+  

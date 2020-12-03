@@ -1,9 +1,32 @@
+<style>
 
+img {
+    display: inline;
+    margin: auto;
+}
 
-<h4> we found</h4>
+ul {
+    list-style-type: none;
+    display: inline;
+}
+
+#vendorfood {
+    text-align: center;
+    width: 15%;
+}
+
+</style>
+
+<h1> we found</h1>
 <% found.forEach((p)=>{ %>
-
-<p><%= p.seller_name %> , <%= p.type_info %> , <%= p.image %> , <%= p.type_info %> <%= p.price %> </p>
-
+    <div id="vendorfood">
+    <img src="<%= p.type_image %>" width="150px"/> 
+<ul>
+    <li>Vendor Name: <%= p.seller_name %></li>
+    <li>Food: <%= p.type%></li>
+    <li>Discription <%= p.type_info %></li>
+    <li>Price: <%= p.price %></li>
+</ul>
+    </div>
 <% })  %> 
 

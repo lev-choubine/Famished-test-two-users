@@ -8,7 +8,9 @@ const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
 const API_KEY = process.env.API_KEY;
 const methodOverride = require('method-override');
-
+const multer = require('multer');
+const cloudinary = require('cloudinary');
+const uploads =multer({ dest: './uploads'})
 const axios = require('axios'); 
 const app = express();
 const db = require('./models');
@@ -76,7 +78,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
       prof => {
         let business = JSON.stringify(prof.business_name)
         let info = JSON.stringify(prof.description)
-        let image = JSON.stringify(prof.image)
+        let image = prof.image
         let street = JSON.stringify(prof.street)
         let city = JSON.stringify(prof.city)
         let state = JSON.stringify(prof.state)
@@ -142,31 +144,17 @@ db.items.findAll().then(finds => {
 app.get('/profile/finds', async (req,res) => {
   let distance;
   let range = 3;
-  //////////////////API FETCH///////////////////////////////////////////////////////////////
-
-  
-
-  ///////////////////////////////////////////////////////
- 
-  // // Use request to call the API
-
- 
     ////////////////////////////////////////////////////////////////////////////////////////
     //////////////////         Matching Options By Price              ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   const picks = await db.user_wants.findAll({
     where: {user_id : req.user.id}
   })
-
   let found = []
-
  for (let i=0; i <picks.length; i++){
     const find = await  db.seller_has.findAll({
-      
       where: {type: picks[i].type, price:{[Op.lte]:picks[i].price}}
     })
     if(find[0] !== undefined ){
-      
       // console.log('&&&&&&&&&&&&&&&&&&&&& empty $$$$$$$$$$$$$$$$$$$$$')
       let userProfile = await db.user_profile.findOne({
         where: {user_id : req.user.id}
@@ -176,11 +164,6 @@ app.get('/profile/finds', async (req,res) => {
       let state = plusWord(userProfile.dataValues.state);
       let zip =userProfile.dataValues.zip
       /////////////////////////////////////////////////////
-   
-      // if(find[0]!== undefined){
-       
-     
-   
       //////////////////////////////////////////////////////////  
       for(let a =0; a <find.length; a++){
       /////////////////////////////////////////////////
@@ -189,14 +172,11 @@ app.get('/profile/finds', async (req,res) => {
       let sellerProfile = await db.seller_profile.findOne({
         where: {seller_id : id} 
       })
-     
-      ///////////////get seller details to run the API/////////////////
-  
+      ///////////////get seller details to run the API////////////////
       let streetSeller = plusWord(sellerProfile.dataValues.street);
       let citySeller = plusWord(sellerProfile.dataValues.city);
       let stateSeller = plusWord(sellerProfile.dataValues.state);
       let zipSeller =sellerProfile.dataValues.zip
-      
       let distanceURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+street+"+"+city+","+state+"+"+zip+"&destinations="+streetSeller+"+"+citySeller+","+stateSeller+"+"+zipSeller+"&key="+API_KEY;
       ////////////////////////////////////////////////////////
    await axios.get(distanceURL )
@@ -204,33 +184,16 @@ app.get('/profile/finds', async (req,res) => {
      let apiResults = await response.data.rows[0].elements[0].distance.text
      let reso = await apiResults.slice(0,apiResults.length-3);
      distance = await parseFloat(reso)
-     
      return distance;
    }).catch(err=>{console.log(err)});
-  
-  
       if(distance < range) {
         found=found.concat(find[a]) 
-        console.log("@@@@@@@@@@@ " + distance);
       }
-
-
-      }
-      
-
-  
+    }
   }else{
-    
+  } 
   }
-    // console.log("!!!!!"+JSON.stringify(find[0]))
-  /////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////get user details to run the API////////////////////
-
-    
-  }
-
-    
-    res.render('finds', {found})  
+    res.render('finds', {found,})  
   })
 
   
