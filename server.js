@@ -86,7 +86,7 @@ app.get('/profile', isLoggedIn, (req, res) => {
         let open = JSON.stringify(prof.open_at)
         let close = JSON.stringify(prof.closes_at)
         let website = JSON.stringify(prof.website)
-        
+        console.log('heroku!');
       
       db.items.findAll().then(finds => {
         let find = finds
