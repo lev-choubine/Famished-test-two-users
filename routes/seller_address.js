@@ -51,7 +51,7 @@ router.put('/profile', function(req, res) {
         
       } 
     }).then((user  =>{
-      console.log(`Storing your address into the database!!`)
+   
       res.redirect('/profile')
     })).catch((err)=>{
       console.log(err);
