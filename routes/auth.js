@@ -27,16 +27,8 @@ router.get('/seller_address', (req,res)=>{
 router.post('/signup', (req, res) => {
   console.log(req.body);
   if(req.body.seller==='on'){
-    console.log(JSON.stringify(req.user))
-    db.user.findOrCreate({
-      where: { email: req.body.email },
-      defaults: {
-        name: '1',
-        password: '1',
-      }}).then( db.user.destroy({
-        where: { email: req.body.id }
-      
-        }) ).then(
+  
+          ///////////////////////////////////////
           db.seller.findOrCreate({
             where: { email: req.body.email },
             defaults: {
@@ -67,29 +59,22 @@ router.post('/signup', (req, res) => {
             req.flash('error', 'Either email or password is incorrect. Please try again.');
             res.redirect('/auth/signup');
           })
-        )
+          //////////////////
+        
       
     ////////////////////////////////////////
     
 
   }else{
   ////////////////////////////////////////////////////////////////
-  db.seller.findOrCreate({
-    where: { email: req.body.email },
-    defaults: {
-      name: '1',
-      password: '1',
-      }
-  }).then(
-    db.seller.destroy({where:{
-      email: req.body.email
-    }})
-  ).then(
-    db.user.findOrCreate({
+  
+    /////////////////////////
+    db.seller.findOrCreate({
       where: { email: req.body.email },
       defaults: {
         name: req.body.name,
-        password: req.body.password
+        password: req.body.password,
+        type: 'user'
     
       }
     })
@@ -120,7 +105,7 @@ router.post('/signup', (req, res) => {
       res.redirect('/auth/signup');
     })
 
-  )
+  
 
  }
 ////////////////////////////////////////////////////////////////////////////////////  
