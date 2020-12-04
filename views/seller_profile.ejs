@@ -27,12 +27,12 @@
     }
 
    #foodFormu {
-        width: 10%;
+      
         margin-top: 50px;
         
         font-family: 'Rubik Mono One', sans-serif;
     background-color: rgb(204, 155, 65);
-    display: inline-block;
+    
     border: 4px  solid rgba(160, 91, 0, 0.856);
     border-radius: 10px;
     padding: 10px;
@@ -42,7 +42,7 @@
 
     #userProf {
     text-align: center;
-    width: 45%;
+    width: 75%;
     background-color: rgba(245, 222, 179, 0.548);
     display: inline-block;
     padding-top: 25px;
@@ -66,10 +66,13 @@ h4 {
        background-color: rgba(201, 141, 64, 0.623);
        font-family: 'Rubik Mono One', sans-serif;
        border-radius: 10px;
+       margin: 3px;
      }
 
      h5 {
          color: wheat;
+         margin: 0px;
+         font-family: 'Rubik Mono One', sans-serif;
      }
 
 #sellerHas {
@@ -85,11 +88,17 @@ h4 {
 
 #pictureUpload {
     background-color: rgb(204, 155, 65);
-    width:25%;
+    width:60%;
     border: 4px  solid rgba(160, 91, 0, 0.856);
     border-radius: 10px;
     padding: 10px;
     display: inline-block;
+    
+    margin-bottom: 5%;
+}
+
+span {
+    display: inline;
 }
 
 .imegi {
@@ -103,19 +112,28 @@ h4 {
    
 }
 
-#Billy{
-    width:300px;
-    height:auto;
+#billysHouse {
+ 
 }
 
+#Billy{
+    width:30%;
+    height:auto;
+   
+}
+
+#leftcolumn {
+    display: inline-block;
+    width: 30%;
+}
 
 #info {
     padding-top:10px;
-    width:30%;
+  
     color:antiquewhite;
     font-family: 'Rubik Mono One', sans-serif;
     background-color: rgb(204, 155, 65);
-    display: inline-block;
+ 
     border: 4px  solid rgba(160, 91, 0, 0.856);
     border-radius: 10px;
     padding: 10px;
@@ -126,6 +144,10 @@ h4 {
     font-family: 'Rubik Mono One', sans-serif;
     display: inline-block;
 
+}
+
+#uploado {
+    display: inline;
 }
 
 .btn-primary{
@@ -195,76 +217,34 @@ h4 {
 
 <div id="userProf">
 
-
+<div id="head">
 <h4>Business Details</h4>
 <h4><%= business %></h4>
-<br/>
 <h4><%= info %></h4>
-<br/>
-
+</div>
+<div id="billysHouse">
 <img id="Billy" class="imegi" src="<%= image %>"  />
 <div id="pictureUpload">
-<h5>Upload Your Profile Picture Here</h5>
-<form action="/seller_address/profile_profilepic" method="POST" enctype="multipart/form-data">
+
+<form id="upload0" action="/seller_address/profile_profilepic" method="POST" enctype="multipart/form-data">
+
+ <input type="submit" class="btn btn-primary" value="Update Your Profile Picture">
  <input type="file" name="inputFile">
- <br />
- <input type="submit" class="btn btn-primary">
 </form>
 </div>
-<br/>
-<div id="info">  
-<p><%= street %>
-<br/>
-<%= city %>
-
-<br/>
-<%= state %>
-
-<br/>
-<%= zip %>
-
-<br/>
-opens at <%= open %> pm
-
-<br/>
-closes at <%= close %>pm </p>
-<a href="<%= website %>"><%= website %></a>
 </div>
-<div id="sellerHas">
-<h4> You are offering</h4>
-<% pick.forEach((p)=>{ %>
-<div id="iHave">
-<p id="foodItem"><%= p.type %> for $<%= p.price %> </p> 
-<image class="imegi" src="<%= p.type_image %>" />
-<form action="/seller_address/profile_foodpic" method="POST" enctype="multipart/form-data" id="foodpick">
-    <input type="file" name="inputFile2" class="btn btn-primary">
-    <input type="hidden" name="id" value="<%= p.id %>">
-    <br/>
-    <input type="submit" class="btn btn-primary">
-
-</form>
-<form  method="POST" action="/seller_address/profile/?_method=DELETE">
-    <input  type="hidden" name="type" value="<%= p.type %>">
-    <button class="btn btn-primary" type="submit" id="button">Remove</button>
-</form>
-</div>
-<% })  %>
-</div>
-</div>
-
-
+<br/>
+<div id="leftcolumn">
     <div id="foodFormu">
         <h2>SELECT YOUR ITEM HERE</h2>
         <form action="/seller_food/profile" method="POST">
            
             <label for="typeInfo">Discribe your Product</label>
-            <br/>
+            
             <input id="typeInfo" type="text" name="typeInfo">
-            <br/>
-            <label for="typeImage">Image</label>
-            <br/>
+          
             <input id="typeImage" type="hidden" name="typeImage" value="https://res.cloudinary.com/delivery-com/image/fetch/w_380,h_285,c_fill,f_auto/https%3A%2F%2Fs3.amazonaws.com%2Fs3.delivery.com%2Fimages%2Fplaceholder%2Ffood.png">
-            <br/>
+          
             <input id="typeIdd" type="hidden" name="typeIdd" value="158158">
             <br/>
             
@@ -292,5 +272,50 @@ closes at <%= close %>pm </p>
             <input id="price" type="text" name="price">
             <br/>
         <input type="submit">
-       
+    </div>
 
+    
+
+<div id="info">  
+<p><%= street %>
+<br/>
+<%= city %>
+
+<br/>
+<%= state %>
+
+<br/>
+<%= zip %>
+
+<br/>
+opens at <%= open %> pm
+
+<br/>
+closes at <%= close %>pm </p>
+<a href="<%= website %>"><%= website %></a>
+</div>
+</div>
+<div id="sellerHas">
+<h4> You are offering</h4>
+<% pick.forEach((p)=>{ %>
+<div id="iHave">
+<p id="foodItem"><%= p.type %> for $<%= p.price %> </p> 
+<image class="imegi" src="<%= p.type_image %>" />
+<form action="/seller_address/profile_foodpic" method="POST" enctype="multipart/form-data" id="foodpick">
+    <input type="file" name="inputFile2" class="btn btn-primary">
+    <input type="hidden" name="id" value="<%= p.id %>">
+    <br/>
+    <input type="submit" class="btn btn-primary">
+
+</form>
+<form  method="POST" action="/seller_address/profile/?_method=DELETE">
+    <input  type="hidden" name="type" value="<%= p.type %>">
+    <button class="btn btn-primary" type="submit" id="button">Remove</button>
+</form>
+</div>
+<% })  %>
+</div>
+</div>
+
+
+   
