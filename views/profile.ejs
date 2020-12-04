@@ -1,4 +1,5 @@
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik+Mono+One&display=swap');
     form {
         text-align: center;
     }
@@ -10,13 +11,37 @@
         margin-top: 50px;
         width:200px;
     }
+
+    h2 {
+        color:antiquewhite;
+    }
+
+    .picks {
+        background-color: rgba(245, 222, 179, 0.534);
+        margin: auto;
+        width: 25%;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        font-family: 'Lalezar', cursive;
+        color:antiquewhite;
+    }
+
+    .container{
+        background-color: rgba(245, 222, 179, 0.534);
+        margin: auto;
+        width: 25%;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        font-family: 'Lalezar', cursive;
+        color:antiquewhite;
+    }
 </style>
 
-<h2>Profile Page</h2>
 
-<h3>Welcome to your USER PROFILE</h3>
-
-<%= pass %>
+<div class="picks">
+<h2><%= pass %> <h2/>
 
 <h4>Listed Address</h4>
 <%= street %>
@@ -36,7 +61,10 @@
     <button class="btn btn-primary" type="submit" id="button">Delete from Favorites</button>
 </form>
 <% })  %>
+</div >
+<div class="picks">
 <a href="/profile/finds">See your option here</a>
+</div>
 <div class="container">
 <form action="/address/profile/?_method=PUT" method="POST">
   

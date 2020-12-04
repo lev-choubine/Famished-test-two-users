@@ -10,12 +10,15 @@
     <%- include('partials/alerts') %>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik+Mono+One&display=swap');
      body {
        background-image: url('https://imgix.ranker.com/list_img_v2/1749/2521749/original/delicious-anime-food-u1?w=817&h=427&fm=jpg&q=50&fit=crop');
        background-repeat: no-repeat;
        
        background-size: cover;
      }
+
+    
      h1 {
        text-align:center;
        font-size: 160px;
@@ -24,16 +27,34 @@
        font-family: 'Rubik Mono One', sans-serif;
      }
 
+     .upthere {
+       font-weight: 900;
+       font-size: 50px;
+       color: whitesmoke;
+       margin: auto;
+       
+     }
+
+     header {
+       text-align: center;
+     }
+
+     li {
+       padding: 0 50px;
+       font-family: 'Lalezar', cursive;
+       font-weight: 900;
+     }
+
     </style>
     <header>
       <nav>
         <ul>
           <% if (!currentUser) { %>
-            <li><a href="/auth/signup">Signup</a></li>
-            <li><a href="/auth/login">Login</a></li>
+            <li><a class="upthere" href="/auth/signup">Get Started</a></li>
+            <li><a class="upthere"href="/auth/login">いただきます</a></li>
           <% } else {%>
-            <li><a href="/auth/logout">Logout</a></li>
-            <li><a href="/profile">Profile</a></li>
+            <li><a class="upthere" href="/auth/logout">Logout</a></li>
+            <li><a class="upthere" href="/profile">Profile</a></li>
           <% } %>
         </ul>
       </nav>

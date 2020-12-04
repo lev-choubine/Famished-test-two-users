@@ -76,16 +76,16 @@ app.get('/profile', isLoggedIn, (req, res) => {
     })
     .then(
       prof => {
-        let business = JSON.stringify(prof.business_name)
-        let info = JSON.stringify(prof.description)
+        let business = prof.business_name
+        let info = prof.description
         let image = prof.image
-        let street = JSON.stringify(prof.street)
-        let city = JSON.stringify(prof.city)
-        let state = JSON.stringify(prof.state)
-        let zip = JSON.stringify(prof.zip)
-        let open = JSON.stringify(prof.open_at)
-        let close = JSON.stringify(prof.closes_at)
-        let website = JSON.stringify(prof.website)
+        let street = prof.street
+        let city = prof.city
+        let state = prof.state
+        let zip = prof.zip
+        let open = prof.open_at
+        let close = prof.closes_at
+        let website = prof.website
         console.log('heroku!');
       
       db.items.findAll().then(finds => {
