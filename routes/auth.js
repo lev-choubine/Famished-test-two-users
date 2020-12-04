@@ -80,7 +80,7 @@ router.post('/signup', (req, res) => {
     })
     .then(
       
-      ([user, created]) => {
+      ([seller, created]) => {
         // if created, success and redirect back to home
      
       if (created) {
