@@ -27,23 +27,84 @@ router.get('/seller_address', (req,res)=>{
 router.post('/signup', (req, res) => {
   console.log(req.body);
   if(req.body.seller==='on'){
-  
+    console.log(JSON.stringify(req.user))
+    db.user.findOrCreate({
+      where: { email: req.body.email },
+      defaults: {
+        name: '1',
+        password: '1',
+      }}).then( db.user.destroy({
+        where: { email: req.body.id }
+      
+        }) ).then(
+          db.seller.findOrCreate({
+            where: { email: req.body.email },
+            defaults: {
+              name: req.body.name,
+              password: req.body.password,
+              type: 'seller'
+            }
+          })
+          .then(([seller, created]) => {
+          
+            if (created) {
+              // if created, success and redirect back to home
+       
+              // Flash Message
+              const successObject = {
+                successRedirect: '/auth/seller_address',/////////////////////////problem here!!
+                successFlash: 'Account created and logging in...'
+              }
+              passport.authenticate('local', successObject)(req, res);
+            } else {
+              // Email already exists
+              req.flash('error', 'Email already exists...')
+              res.redirect('/auth/signup');
+            }
+          })
+          .catch(err => {
+            console.log('Error', err);
+            req.flash('error', 'Either email or password is incorrect. Please try again.');
+            res.redirect('/auth/signup');
+          })
+        )
+      
     ////////////////////////////////////////
-    db.seller.findOrCreate({
+    
+
+  }else{
+  ////////////////////////////////////////////////////////////////
+  db.seller.findOrCreate({
+    where: { email: req.body.email },
+    defaults: {
+      name: '1',
+      password: '1',
+      }
+  }).then(
+    db.seller.destroy({where:{
+      email: req.body.email
+    }})
+  ).then(
+    db.user.findOrCreate({
       where: { email: req.body.email },
       defaults: {
         name: req.body.name,
-        password: req.body.password,
-        type: 'seller'
+        password: req.body.password
+    
       }
     })
-    .then(([seller, created]) => {
-      if (created) {
-        // if created, success and redirect back to home
+    .then(
       
+      ([user, created]) => {
+        // if created, success and redirect back to home
+     
+      if (created) {
+      
+          
+            //  
         // Flash Message
         const successObject = {
-          successRedirect: '/auth/seller_address',/////////////////////////problem here!!
+          successRedirect: '/auth/user_address',//////////////////////////////SHOULD REDIRECT TO THE ADDRESS DETAILS!
           successFlash: 'Account created and logging in...'
         }
         passport.authenticate('local', successObject)(req, res);
@@ -59,37 +120,9 @@ router.post('/signup', (req, res) => {
       res.redirect('/auth/signup');
     })
 
-  }else{
-  ////////////////////////////////////////////////////////////////
-  db.user.findOrCreate({
-    where: { email: req.body.email },
-    defaults: {
-      name: req.body.name,
-      password: req.body.password
-  
-    }
-  })
-  .then(([user, created]) => {
-    if (created) {
-      // if created, success and redirect back to home
-     
-      // Flash Message
-      const successObject = {
-        successRedirect: '/auth/user_address',//////////////////////////////SHOULD REDIRECT TO THE ADDRESS DETAILS!
-        successFlash: 'Account created and logging in...'
-      }
-      passport.authenticate('local', successObject)(req, res);
-    } else {
-      // Email already exists
-      req.flash('error', 'Email already exists...')
-      res.redirect('/auth/signup');
-    }
-  })
-  .catch(err => {
-    console.log('Error', err);
-    req.flash('error', 'Either email or password is incorrect. Please try again.');
-    res.redirect('/auth/signup');
-  })}
+  )
+
+ }
 ////////////////////////////////////////////////////////////////////////////////////  
 });
 ////////////////////////////////////////////////////////////////////////////////////

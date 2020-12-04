@@ -69,8 +69,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/profile', isLoggedIn, (req, res) => {
-  
-  if(req.user.type){
+  console.log(req.user)
+  if(req.user.type==="seller"){
     db.seller_profile.findOne({
       where: {seller_id : req.user.id}
     })
@@ -125,7 +125,7 @@ db.items.findAll().then(finds => {
     let pick = picks
     
     res.render('profile', {pass: req.user.name, street, city, state, zip, find, pick});
-  })
+  }).catch(err=>{console.log(err)})
   }
 /////////////////////////////////////////////////////////////////////////
 )
@@ -144,7 +144,7 @@ db.items.findAll().then(finds => {
 ///////////////////////////////FOR METHOD TO DISPLAY FINDS FOR THE USER///////////////////
 app.get('/profile/finds', async (req,res) => {
   let distance;
-  let range = 3;
+  let range = 12;
     ////////////////////////////////////////////////////////////////////////////////////////
     //////////////////         Matching Options By Price              ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const picks = await db.user_wants.findAll({
@@ -169,7 +169,7 @@ app.get('/profile/finds', async (req,res) => {
       for(let a =0; a <find.length; a++){
       /////////////////////////////////////////////////
       let id = find[a].seller_id
-     
+      console.log(JSON.stringify(find[a]))
       let sellerProfile = await db.seller_profile.findOne({
         where: {seller_id : id} 
       })
@@ -185,6 +185,7 @@ app.get('/profile/finds', async (req,res) => {
      let apiResults = await response.data.rows[0].elements[0].distance.text
      let reso = await apiResults.slice(0,apiResults.length-3);
      distance = await parseFloat(reso)
+     console.log('##########&&&&&&&&'+distance);
      return distance;
    }).catch(err=>{console.log(err)});
       if(distance < range) {
