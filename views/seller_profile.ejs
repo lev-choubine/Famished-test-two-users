@@ -16,22 +16,22 @@
 
     .container {
         width: 20%;
-        margin-top: 50px;
-        
+      
+        background-color: rgba(245, 222, 179, 0.548);
         font-family: 'Rubik Mono One', sans-serif;
-    background-color: rgb(204, 155, 65);
-    display: inline-block;
-    border: 4px  solid rgba(160, 91, 0, 0.856);
+
+    flex: 25%;
+  
     border-radius: 10px;
     padding: 10px;
     }
 
    #foodFormu {
       
-        margin-top: 50px;
+       
         
         font-family: 'Rubik Mono One', sans-serif;
-    background-color: rgb(204, 155, 65);
+  
     
     border: 4px  solid rgba(160, 91, 0, 0.856);
     border-radius: 10px;
@@ -44,7 +44,7 @@
     text-align: center;
     width: 75%;
     background-color: rgba(245, 222, 179, 0.548);
-    display: inline-block;
+    flex: 75%;
     padding-top: 25px;
     padding-bottom: 25px;
     border-radius: 15px;
@@ -63,7 +63,7 @@ h4 {
        text-align:center;
        font-size: 30px;
        color:antiquewhite;
-       background-color: rgba(201, 141, 64, 0.623);
+       background-color: rgba(209, 136, 41, 0.253);
        font-family: 'Rubik Mono One', sans-serif;
        border-radius: 10px;
        margin: 3px;
@@ -76,52 +76,46 @@ h4 {
      }
 
 #sellerHas {
-    background-color: rgb(204, 155, 65);
-    width: 60%;
+  
+    width: 70%;
   
   
-    display: inline-block;
+    flex: 70%;
     border: 4px  solid rgba(160, 91, 0, 0.856);
     border-radius: 10px;
     padding: 10px;
 }  
 
-#pictureUpload {
-    background-color: rgb(204, 155, 65);
-    width:60%;
-    border: 4px  solid rgba(160, 91, 0, 0.856);
-    border-radius: 10px;
-    padding: 10px;
-    display: inline-block;
+img {
     
-    margin-bottom: 5%;
+    margin: auto;
+    width: 15%;
+    height: 15%;
+    object-fit: cover;
+    border-radius: 100%;
 }
 
 span {
     display: inline;
 }
 
-.imegi {
-    width: 100px;
-    height: auto;
-    background-repeat: no-repeat;
-    display: inline;
-    background-size:cover;
+img {
+    
+    margin: auto;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
     border-radius: 100%;
-    border: 5px solid whitesmoke;
-   
 }
 
-
-
-#Billy{
-    width:30%;
-    height:auto;
-   
+#bodyRock {
+    display: flex;
+    position: relative;
 }
+
 
 #leftcolumn {
-    display: inline-block;
+    flex:30%;
     width: 30%;
 }
 
@@ -130,7 +124,7 @@ span {
   
     color:antiquewhite;
     font-family: 'Rubik Mono One', sans-serif;
-    background-color: rgb(204, 155, 65);
+
  
     border: 4px  solid rgba(160, 91, 0, 0.856);
     border-radius: 10px;
@@ -140,7 +134,7 @@ span {
 #foodItem{
     color:antiquewhite;
     font-family: 'Rubik Mono One', sans-serif;
-    display: inline-block;
+    display: block;
 
 }
 
@@ -161,8 +155,89 @@ span {
     border: 4px  solid rgba(160, 91, 0, 0.856);
     border-radius: 10px;
     padding: 10px;
+    display: flex;
+    position: relative;
 }
+#nameface {
+    position: relative;
+    display: flex;
+}
+
+#billysHouse {
+    flex:20%;
+    width:20%;
+    display: inline;
+}
+
+#head {
+    flex:80;
+}
+
+.subbut {
+    
+    font-family: 'Lalezar', cursive;
+    font-size: 13px;
+  
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(243, 200, 119, 0.075);
+    border: 4px solid rgba(245, 245, 245, 0.274);
+  
+}
+
+#sub2{
+    position: relative;
+    display: flex;
+}
+
+#imegi {
+    flex:35%;
+}
+
+#myFood{
+    flex: 65%;
+}
+
+#buttonHell {
+    display: flex;
+    position: relative;
+}
+
+#buttonhell2 {
+  font-size: 20px;
+  height: 35px;
+}
+
+#foodpick {
+    flex: 80%;
+    margin-top: 3%;
+  
+    
+}
+
+#buttonhell3 {
+    flex: 20%;
+    text-align: center;
+    padding:5px;
+  
+}
+
+select {
+    padding: 10px;
+  border-radius: 5px;
+  width: 12%;
+    font-family: 'Lalezar', cursive;
+    font-size: 20px;
+    padding: 3px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(245, 222, 179, 0.432);
+    border: 4px solid rgba(245, 245, 245, 0.185);
+
+}
+
+
 </style>
+<div id="bodyRock">
 <div class="container">
     <h4>Update Your Information</h4>
     <form action="/seller_address/profile/?_method=PUT" method="POST">
@@ -204,7 +279,7 @@ span {
         <input id="userClose" type="text" name="website">
         <br/>
         
-        <input type="submit">
+        <input type="submit" class="subbut">
       </form>
   
    
@@ -214,24 +289,26 @@ span {
 
 
 <div id="userProf">
+    <div id="nameface">
 
-<div id="head">
-<h4>Business Details</h4>
-<h4><%= business %></h4>
-<h4><%= info %></h4>
-</div>
-<div id="billysHouse">
-<img id="Billy" class="imegi" src="<%= image %>"  />
-<div id="pictureUpload">
+          <div id="billysHouse">
+               <img id="Billy" class="imegi" src="<%= image %>"  />
+                 <div id="pictureUpload">
+                      <form id="upload" action="/seller_address/profile_profilepic" method="POST" enctype="multipart/form-data">
 
-<form id="upload" action="/seller_address/profile_profilepic" method="POST" enctype="multipart/form-data">
-
- <input type="submit" class="btn btn-primary" value="Update Your Profile Picture">
- <input type="file" name="inputFile">
-</form>
-</div>
-</div>
+ <input type="submit" class="subbut" value="Update Your Profile Picture">
+ <input type="file" name="inputFile" class="subbut">
+                       </form>
+                 </div>
+          </div>
+          <div id="head">
+             <h4>Business Details</h4>
+             <h4><%= business %></h4>
+             <h4><%= info %></h4>
+          </div>
+     </div>
 <br/>
+<div id="sub2">
 <div id="leftcolumn">
     <div id="foodFormu">
         <h2>SELECT YOUR ITEM HERE</h2>
@@ -255,11 +332,11 @@ span {
                 <option value = "<%= f.type %>" selected><%= f.type %></option>
                 <h2>Your image here</h2>
               
-                   </div>
+    
                
            
                 <% }) %>
-        
+           
               
                
             
@@ -269,10 +346,10 @@ span {
             <br/>
             <input id="price" type="text" name="price">
             <br/>
-        <input type="submit">
+        <input type="submit" class="subbut">
             </form>
-    </div>
-
+   
+        </div>
     
 
 <div id="info">  
@@ -296,25 +373,30 @@ closes at <%= close %>pm </p>
 </div>
 <div id="sellerHas">
 <h4> You are offering</h4>
-<% pick.forEach((p)=>{ %>
-<div id="iHave">
+     <% pick.forEach((p)=>{ %>
+     <div id="iHave">
+        <image class="imegi" src="<%= p.type_image %>" />
+<div id="myFood">            
 <p id="foodItem"><%= p.type %> for $<%= p.price %> </p> 
-<image class="imegi" src="<%= p.type_image %>" />
+<p id="foodItem"><%= p.type_info %>  </p> 
+
+<div id="buttonHell">
 <form action="/seller_address/profile_foodpic" method="POST" enctype="multipart/form-data" id="foodpick">
-    <input type="file" name="inputFile2" class="btn btn-primary">
+    <input type="file" name="inputFile2" class="subbut" id="buttonhell1">
     <input type="hidden" name="id" value="<%= p.id %>">
-    <br/>
-    <input type="submit" class="btn btn-primary">
+    <input type="submit" class="subbut" >
 
 </form>
-<form  method="POST" action="/seller_address/profile/?_method=DELETE">
+<form  class="subbut" method="POST" action="/seller_address/profile/?_method=DELETE" id="buttonhell3">
     <input  type="hidden" name="type" value="<%= p.type %>">
-    <button class="btn btn-primary" type="submit" id="button">Remove</button>
+    <button class="subbut" type="submit" id="buttonhell2" >Remove</button>
 </form>
 </div>
+</div>
+    </div>
 <% })  %>
+        </div>
 </div>
 </div>
-
 
    

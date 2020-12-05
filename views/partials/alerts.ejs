@@ -1,12 +1,18 @@
-
+<style>
+    h4 {
+        color: wheat;
+        font-size: 20px;
+       
+    }
+</style>
 <% if (alerts.error) { %>
     <% alerts.error.forEach(msg => { %>
-        <div class="alert alert-error"><%= msg %></div>
+        <div class="alert alert-error"><h4><%= msg %></h4></div>
     <% }) %> 
 <% } %>
 
 <% if (alerts.success) { %>
     <% alerts.success.forEach(msg => { %>
-        <div class="alert alert-success"><%= msg %></div>
+        <div class="alert alert-success"><h4><%= msg %></h4></div>
     <% }) %> 
 <% } %>

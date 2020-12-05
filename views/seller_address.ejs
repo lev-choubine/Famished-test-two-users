@@ -1,3 +1,36 @@
+<style>
+.container {
+    width:34%;
+    margin-left: 33%;
+    background-color: rgba(222, 184, 135, 0.705);
+    display: inline-block;
+    border: 4px  solid rgba(160, 91, 0, 0.856);
+    border-radius: 10px;
+    padding: 10px;
+
+  }
+h1 {
+    margin-top: 0;
+    margin-bottom: 2%;
+}
+
+input {
+       border-radius: 10px;
+       width: 34%
+     }
+
+  form {
+    font-family: 'Rubik Mono One', sans-serif;
+    color:antiquewhite;
+    margin: auto;
+    text-align: center;
+  }   
+
+  #button {
+    width: 35%;
+  }
+</style>
+
 <div class="container">
     <form action="/seller_address/seller_address" method="POST">
         <label for="userBusiness">Business Name</label>
@@ -8,14 +41,7 @@
         <br/>
         <input id="userInfo" type="text" name="info">
         <br/>
-
-
-
-
-        <label for="userImage">Image or Logo</label>
-        <br/>
         <input id="userImage" type="hidden" value="http://cdn.onlinewebfonts.com/svg/img_508999.png"name="image">
-        <br/>
         <label for="userStreet">Street Address</label>
         <br/>
         <input id="userStreet" type="text" name="street">
@@ -44,7 +70,7 @@
         <br/>
         <input id="website" type="text" name="website">
         <br/>
-        
+        <br/>
         <input type="submit">
-
+     </form>
 </div>

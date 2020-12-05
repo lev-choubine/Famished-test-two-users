@@ -20,11 +20,27 @@
 
     
      h1 {
+      
        text-align:center;
        font-size: 160px;
        color:antiquewhite;
-       background-color: rgba(222, 184, 135, 0.705);
+       
        font-family: 'Rubik Mono One', sans-serif;
+     }
+
+     #famished{
+       margin:auto;
+       width: 80%;
+       padding-right: 10%;
+       padding-left: 10%;
+       background-color: rgba(222, 184, 135, 0.705);
+       border-radius: 10px;
+     }
+
+     #thisIsM{
+       color: rgba(214, 88, 65, 0.658);
+       padding-left: 1%;
+       padding-left: 1%;
      }
 
      .upthere {
@@ -43,8 +59,13 @@
        padding: 0 50px;
        font-family: 'Lalezar', cursive;
        font-weight: 900;
+       display: inline;
      }
-
+    .redLetter {
+     display: inline;
+  
+  
+}
     </style>
     <header>
       <nav>
@@ -59,7 +80,9 @@
         </ul>
       </nav>
     </header>
-    <h1>Famished</h1>
+    <div id="famished">
+    <h1 class="redLetter">Fa</h1><h1 id="thisIsM" class="redLetter">m</h1><h1 class="redLetter">ished</h1>
+  </div>
     <%- body %>
   </body>
 </html>

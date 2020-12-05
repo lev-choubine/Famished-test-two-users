@@ -1,3 +1,40 @@
+<style>
+  .container {
+    width:34%;
+    margin-left: 33%;
+    background-color: rgba(222, 184, 135, 0.705);
+    display: inline-block;
+    border: 4px  solid rgba(160, 91, 0, 0.856);
+    border-radius: 10px;
+    padding: 10px;
+
+  }
+
+  h2 {
+       text-align:center;
+       font-size: 50px;
+       color:antiquewhite;
+       background-color: rgba(222, 184, 135, 0.705);
+       font-family: 'Rubik Mono One', sans-serif;
+     }
+
+     input {
+       border-radius: 10px;
+       width: 34%
+     }
+
+  form {
+    font-family: 'Rubik Mono One', sans-serif;
+    color:antiquewhite;
+    margin: auto;
+    text-align: center;
+  }   
+
+  #button {
+    width: 35%;
+  }
+</style>
+<h2>Fill Out Our Address Form Below</h2>
 <div class="container">
     <form action="/address/user_address" method="POST">
       
@@ -18,9 +55,10 @@
         <br/>
         <input id="userZip" type="text" name="zip">
         <br/>
-        <input type="submit">
-      </form>
+    </br>
+        <input type="submit" id ="button">
+        </form>
     </div>
-    <div class="container">
-    <h2>SELECT YOUR ITEM HERE</h2>
-    <form action="/user_food/profile" method="POST">
+   
+   
+   

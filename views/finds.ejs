@@ -2,8 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
       @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik+Mono+One&display=swap');
 img {
-    display: inline;
+    
     margin: auto;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 100%;
 }
 
 ul {
@@ -12,14 +16,16 @@ ul {
 }
 
 #vendorfood {
-    text-align: center;
-    width: 30%;
-    background-color: rgba(245, 222, 179, 0.548);
-    margin: auto;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    border-radius: 15px;
-    margin-bottom: 10px;
+    width:25%;
+    background-color: rgba(245, 222, 179, 0.534);
+      display:inline-block;
+    
+      text-align: center;
+      padding-bottom: 5%;
+      border-radius: 10px;
+      font-family: 'Lalezar', cursive;
+      color:antiquewhite;
+      margin-top: 1%;
 }
 
 h3 {
@@ -29,19 +35,34 @@ h3 {
        background-color: rgba(222, 184, 135, 0.705);
        font-family: 'Rubik Mono One', sans-serif;
      }
+    
+ .foodProperty {
+     display: block;
+ }    
 
 </style>
 
 <h3> we found</h3>
 <% found.forEach((p)=>{ %>
     <div id="vendorfood">
-    <img src="<%= p.type_image %>" width="150px"/> 
+    
+    <img src="<%= p.seller_image %>" width="150px"/> 
 <ul>
-    <li>Vendor Name: <%= p.seller_name %></li>
-    <li>Food: <%= p.type%></li>
-    <li>Discription <%= p.type_info %></li>
-    <li>Price: <%= p.price %></li>
+    <li class="foodProperty">Vendor Name: <%= p.seller_name %></li>
+    <img src="<%= p.type_image %>" width="150px"/> 
+    <li class="foodProperty">Food: <%= p.type%></li>
+    <li class="foodProperty">Discription <%= p.type_info %></li>
+    <li class="foodProperty">Price: <%= p.price %></li>
+    <li class="foodProperty">Price: <%= p.seller_info %></li>
+   
+    <li class="foodProperty">Price: <%= p.seller_street %></li>
+    <li class="foodProperty">Price: <%= p.seller_city %></li>
+    <li class="foodProperty">Price: <%= p.seller_state %></li>
+    <li class="foodProperty">Price: <%= p.seller_zip %></li>
+    <li class="foodProperty">Price: <%= p.seller_open %></li>
+    <li class="foodProperty">Price: <%= p.seller_close %></li>
 </ul>
+     <a href="<%= p.seller_website %>"><%= p.seller_website %></a>
     </div>
 <% })  %> 
 
