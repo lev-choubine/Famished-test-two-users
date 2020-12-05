@@ -10,10 +10,14 @@
         margin-top: 0%;
         margin-bottom: 0%;
     }
+
+    h4 {
+        color: white;
+    }
    
 
     h2 {
-        color:antiquewhite;
+        color:rgb(255, 255, 255);
     }
 
     div {
@@ -26,14 +30,17 @@
     }
     .container{
         
-        background-color: rgba(245, 222, 179, 0.534);
+        background-color: rgba(161, 214, 16, 0.295);
       
         width: 98%;
         text-align: center;
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-right: -5px;
         padding-bottom: 5%;
         border-radius: 10px;
         font-family: 'Lalezar', cursive;
-        color:antiquewhite;
+        color:rgb(255, 255, 255);
         margin-top: 1%;
         
     }
@@ -45,16 +52,21 @@
   
 
     #leftColumn {
-        flex: 25%;    
+        flex: 25%; 
+        background-color: rgba(24, 92, 92, 0.377); 
+        border-radius: 10px;  
     }
 
     #rightColumn{
        flex: 30%;
-      
+       background-color: rgba(230, 124, 215, 0.295);
+       border-radius: 10px;
     }
 
     #third {
         flex: 35%;
+        background-color: rgba(39, 15, 77, 0.253);
+        border-radius: 10px;
     }
 
     
@@ -66,7 +78,7 @@
     font-size: 20px;
     padding: 3px;
     color: rgb(255, 255, 255);
-    background-color: rgba(245, 222, 179, 0.432);
+    background-color: rgba(114, 105, 189, 0.432);
     border: 4px solid rgba(245, 245, 245, 0.185);
 
 }
@@ -79,7 +91,7 @@ select {
     font-size: 20px;
     padding: 3px;
     color: rgb(255, 255, 255);
-    background-color: rgba(245, 222, 179, 0.432);
+    background-color: rgba(86, 196, 104, 0.26);
     border: 4px solid rgba(245, 245, 245, 0.185);
 
 }
@@ -91,10 +103,14 @@ select {
     padding: 3px;
     border-radius: 10px;
     color: rgb(255, 255, 255);
-    background-color: rgba(243, 200, 119, 0.075);
+    background-color: rgba(228, 35, 180, 0.274);
     border: 4px solid rgba(245, 245, 245, 0.274);
   }
-
+label {
+    color: rgb(255, 255, 255); 
+    font-family: 'Lalezar', cursive; 
+    font-size: 20px;
+}
 
 
 
@@ -110,13 +126,15 @@ select {
         <h2><%= pass %> <h2/>
         
         <h4>Listed Address</h4>
-        <%= street %>
-        <br/>
-        <%= city %>
-        <br/>
-        <%= state %>
-        <br/>
-        <%= zip %>
+       <p><%= street %> </p> 
+     
+        <p><%= city %></p>
+       
+        <p> <%= state %></p>
+       
+    
+     
+        <p> <%= zip %></p>
         
         </div >
       <!-- $$$$$ -->
