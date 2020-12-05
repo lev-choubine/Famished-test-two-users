@@ -16,7 +16,7 @@ const app = express();
 const db = require('./models');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
-
+/////////
 // isLoggedIn middleware
 const isLoggedIn = require('./middleware/isLoggedIn');
 
