@@ -103,7 +103,9 @@ app.get('/profile', isLoggedIn, (req, res) => {
       }
     )
     ////////////////////////////////////////////////////////////////////
-    .catch(err=>{console.log(err)})
+    .catch(err=>{console.log(err)
+    res.render('error')
+    })
   /////////////////////////////////////////////////////////////////////  
   } else {
     db.user_profile.findOne({
@@ -126,7 +128,8 @@ db.items.findAll().then(finds => {
     let pick = picks
     
     res.render('profile', {pass: req.user.name, street, city, state, zip, find, pick});
-  }).catch(err=>{console.log(err)})
+  }).catch(err=>{console.log(err)
+    res.render('error')})
   }
 /////////////////////////////////////////////////////////////////////////
 )
@@ -136,7 +139,8 @@ db.items.findAll().then(finds => {
 
     
 })
-    .catch(err=>{console.log(err)})
+    .catch(err=>{console.log(err)
+      res.render('error')})
     
     
   }
@@ -188,7 +192,8 @@ app.get('/profile/finds', async (req,res) => {
      distance = await parseFloat(reso)
      console.log('##########&&&&&&&&'+distance);
      return distance;
-   }).catch(err=>{console.log(err)});
+   }).catch(err=>{console.log(err)
+    res.render('error')});
       if(distance < range) {
         found=found.concat(find[a]) 
       }

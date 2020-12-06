@@ -70,45 +70,61 @@ router.put('/profile', function(req, res) {
       console.log(`Removing ${it.name} from our database.`)
       res.redirect('/profile')
     })).catch((err)=>{
-      console.log(err);
+      res.status(400).render('error')
     })
   })
 ///////////////////////////////////////////////////////////////
 router.post('/profile_profilepic', uploads.single('inputFile'),(req, res)=>{
   console.log('On POST route');
-  let file = req.file.path;
-  cloudinary.uploader.upload(file,(result) =>{
-    console.log(file)
-     console.log(result);
-//render result page with image
-db.seller_profile.findOne({
-  where: { seller_id : req.user.id}
-  }).then((user)  =>{
-      user.update ({
-          image: result.url
-      })
-     res.redirect('/profile')
+  if (req.file){
+    let file = req.file.path;
+    cloudinary.uploader.upload(file,(result) =>{
+      console.log(file)
+       console.log(result);
+  //render result page with image
+  
+  db.seller_profile.findOne({
+    where: { seller_id : req.user.id}
+    }).then((user)  =>{
+        user.update ({
+            image: result.url
+        })
+       res.redirect('/profile')
+    }).catch((err)=>{
+      res.status(400).render('error')
+    })
   })
-})
+  }else{
+    res.redirect('/profile')
+  }
+  
+
 }) 
 ////////////////////////////////////////////////////////////
 router.post('/profile_foodpic', uploads.single('inputFile2'),(req, res)=>{
   console.log('On POST route');
-  let file = req.file.path;
-  cloudinary.uploader.upload(file,(result) =>{
-    console.log(file)
-     console.log(result);
-//render result page with image
-db.seller_has.findOne({
-  where: { id : req.body.id}
-  }).then((user)  =>{
-      user.update ({
-        type_image: result.url
-      })
-     res.redirect('/profile')
+  if(req.file){
+    let file = req.file.path;
+    cloudinary.uploader.upload(file,(result) =>{
+      console.log(file)
+       console.log(result);
+  //render result page with image
+  db.seller_has.findOne({
+    where: { id : req.body.id}
+    }).then((user)  =>{
+        user.update ({
+          type_image: result.url
+        })
+       res.redirect('/profile')
+    }).catch((err)=>{
+      res.status(400).render('error')
+    })
   })
+  }else{
+    res.redirect('/profile')
+  }
+ 
 })
-}) 
 
 // router.get('/:url',(req, res) => {
      
