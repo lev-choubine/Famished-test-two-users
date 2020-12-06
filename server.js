@@ -195,13 +195,22 @@ app.get('/profile/finds', async (req,res) => {
    }).catch(err=>{console.log(err)
     res.render('error')});
       if(distance < range) {
+         find[a].seller_street = await sellerProfile.street
+         find[a].seller_city = await sellerProfile.city
+         find[a].seller_state = await sellerProfile.state
+         find[a].seller_zip = await sellerProfile.zip
+         find[a].seller_website = await sellerProfile.website
+         console.log("!!!!!! F I N D H E R E " + JSON.stringify(find[a]), sellerProfile)
+         
+
+
         found=found.concat(find[a]) 
       }
     }
   }else{
   } 
   }
-    res.render('finds', {found,})  
+    res.render('finds', {found})  
   })
 
   
