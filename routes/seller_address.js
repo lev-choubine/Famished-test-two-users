@@ -6,6 +6,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary');
 const uploads =multer({ dest: './uploads'})
 const ejsLayouts = require('express-ejs-layouts');
+
 router.put('/profile', function(req, res) {
     console.log('attemting to post');
     db.seller_profile.findOne({

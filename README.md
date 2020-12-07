@@ -15,4 +15,110 @@ As a vendor I want to be able update my location since I can park my food truck 
 The application stores all information for the user's profiles vendor's profiles, user preffrences and vendor's deals into the application database. Once the user requests so see their options - the application filters out Deals that have the matching type (Burger) and price equal to or less then user's prefference. The application then uses to [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/overview#:~:text=The%20Distance%20Matrix%20API%20is%20a%20service%20that,containing%20duration%20and%20distance%20values%20for%20each%20pair.) to only display the items within the desired range. Easily put - if I live in New York - I will not see any inforamtion on vendors in California - no matter how cheap their deals are.
 
 ## Database Structure
-![structure](schema.png)
+![structure](database.png)
+
+We use 6 tables in this application. SELLERS table stores all information on app users - both sellers and buyes. The type column dicates the routing: either to seller or user profile types.<br/>
+USER_PROFILES stores the address of our buyers that we will later user in our distace comparison logic. <br/>
+SELLER_PROFILES stores informatioin on our sellers. We store the address for the same reason as mentioned above among profile images, description and other facts. <br/>
+Both USER_PROFILES ans SELLER_PROFILES refference id from the SELLERS table.<br/>
+ITEMS table stores types of food that we will use in our search. We are using 9 types for the demonstration of the app - however this can be later developed into hundreds of options to choose from. We are a database that will be rendered into a drop-down menu to ensure that if SELLERS are offering BURGERS and USERS are looking for BURGERS - they arrive at the same row in our database.<br/>
+USER_WANTS stores information on items user is seraching for. We are passing down the ID from the USER_PROFILES table.<br/>
+SELLER_HAS stores information on deals made the SELLER. We are pulling a lot of data from our SELLER_PROFILES table to later render in our SEARCH RESULTS page.
+
+## API
+
+### GOOGLE DISTANCE MATRIX
+[Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/overview#:~:text=The%20Distance%20Matrix%20API%20is%20a%20service%20that,containing%20duration%20and%20distance%20values%20for%20each%20pair.) <br/>
+This API measures distance between 2 passed locations. See example for the JSON response.
+```js
+{
+   "destination_addresses" : [ "New York, NY, USA" ],
+   "origin_addresses" : [ "Washington, DC, USA" ],
+   "rows" : [
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "225 mi",
+                  "value" : 361715
+               },
+               "duration" : {
+                  "text" : "3 hours 49 mins",
+                  "value" : 13725
+               },
+               "status" : "OK"
+            }
+         ]
+      }
+   ],
+   "status" : "OK"
+}
+```
+
+API: <br/>
+https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=YOUR_API_KEY
+
+Inputs for the API | 
+------ | 
+Destination Street  | 
+Destination City  | 
+Destination State  | 
+Destination ZIP  | 
+Origin Street  | 
+Origin  City | 
+Origin  State | 
+Origig  ZIP | 
+<br/>
+
+### CLOUDINARY
+[Cloudinary](https://cloudinary.com/)
+We will use this cloud server to store profile images and post the provided links into our database. <br/>
+
+Register your account.<br/>
+
+API Environment variable:<br/>	
+CLOUDINARY_URL=cloudinary://***************:***************************<br/>	
+Copy to clipboard<br/>	
+select COPY TO CLIPBOARD file and paste it into your .env file. This will automatically be refferenced by the code in the node module.
+
+## ROUTES
+
+Method | Path | Location| Purpose 
+------ | ------ | ------ | ------
+GET   | /  | server.js  | Homepage
+GET  | profile  | server.js  | User's profile
+GET  | profile/finds   | server.js  | Search results
+GET  | auth/signip   | auth.js  | Sign up page
+GET  | auth/login  | auth.js   | Login Page
+POST  | auth/signup  | auth.js  | Stores Auth details
+GET | auth/user_address   | auth.js   | User profile details form  
+GET   | auth/seller_address   | auth.js  | Seller profile details form
+POST   | auth/login  | auth.js   | Logs user in
+GET  | auth/logout  | auth.js  | Logs user out
+POST  | address/user_address  | address.js   | Creates user address for the buyer's profile
+PUT   | address/profile   |address.js  | Updates address for buyers
+DELETE | address/profile | address.js | Deletes user's choices
+POST  | seller_address/profile  | seller_address.js  | Creates user address for sellers
+PUT  | seller_address/profile  | seller_address.js  | Updates user address for sellers
+DELETE | seller_address/profile  | seller_address.js  | Deletes DEALs made by user.
+POST  | seller_address//profile_profilepic  | seller_address.js  | Stores or updates seller's profile picture
+POST  | seller_address//profile_foodpic | seller_address.js  | Stores or updates seller's DEAL picture
+POST  | seller_food/profile  | seller_food.js   | Creates and stores seller's DEALS
+POST   | user_food/profile   | user_food.js | Creates user's choices for the buyer
+
+## SEEDER FILE
+
+food_items.js <br/>
+
+imports types (of FOOD) into our ITEMS table
+
+```js
+{ type: 'Ramen',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+{ type: 'Sushi',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+```
