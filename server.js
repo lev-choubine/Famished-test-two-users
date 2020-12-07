@@ -189,7 +189,21 @@ app.get('/profile/finds', async (req,res) => {
    .then(async response => {
      let apiResults = await response.data.rows[0].elements[0].distance.text
      let reso = await apiResults.slice(0,apiResults.length-3);
-     distance = await parseFloat(reso)
+     
+     let arr = reso.split('')
+
+     for(let i=0; i < arr.length; i++){
+       if(arr[i]===','){
+       
+       var removed =arr.splice(i,1)
+       console.log(arr)
+       }}
+
+       let noComma = arr.join('');
+       console.log(noComma)
+     
+     
+     distance = await parseFloat(noComma);
      console.log('##########&&&&&&&&'+distance);
      return distance;
    }).catch(err=>{console.log(err)

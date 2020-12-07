@@ -1,6 +1,15 @@
-let string = "14.3 km"
-let res = string.slice(0,string.length-3);
-let num =parseFloat.res
-console.log(res * 8);
-console.log(res);
-console.log('Hello!')
+const reso ="2195"
+let arr = reso.split('')
+
+     for(let i=0; i < arr.length; i++){
+       if(arr[i]===','){
+       
+       var removed =arr.splice(i,1)
+       console.log(arr)
+       }}
+
+       let noComma = arr.join('');
+       console.log(noComma)
+       
+
+     
