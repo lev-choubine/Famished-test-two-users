@@ -21,7 +21,14 @@ module.exports = (sequelize, DataTypes) => {
     type_image: DataTypes.STRING,
     type_id: DataTypes.INTEGER,
     type: DataTypes.STRING,
-    price: DataTypes.INTEGER,
+    price: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+        msg: 'please enter a numer'
+      }
+    }
+  },
     /////////////////////////
     seller_info: DataTypes.STRING,
     seller_image: DataTypes.STRING,
