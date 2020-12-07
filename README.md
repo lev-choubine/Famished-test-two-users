@@ -122,3 +122,78 @@ imports types (of FOOD) into our ITEMS table
         updatedAt: new Date()
       },
 ```
+
+## CODE
+
+server.js <br/>
+
+The application does it's search for matches and posts them on the FINDS page. <br/>
+STEP 1: SELECT DEALS from the SELLER_HAS database that has it's TYPE (foods) matching with USER_WANTS and the price of SELLER_HAS items lower then USER_WANTS.<br/>
+STEP 2: GET the distance between SELLERS and USERS and filter out SELLER DEALS within a set distance range.
+
+
+```js
+app.get('/profile/finds', async (req,res) => {
+  let distance;
+  let range = 12;
+    ////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////         Matching Options By Price              ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const picks = await db.user_wants.findAll({
+    where: {user_id : req.user.id}
+  })
+  let found = []
+ for (let i=0; i <picks.length; i++){
+    const find = await  db.seller_has.findAll({
+      where: {type: picks[i].type, price:{[Op.lte]:picks[i].price}}
+    })
+    if(find[0] !== undefined ){
+      
+      let userProfile = await db.user_profile.findOne({
+        where: {user_id : req.user.id}
+      })
+      let street = plusWord(userProfile.dataValues.street);
+      let city = plusWord(userProfile.dataValues.city);
+      let state = plusWord(userProfile.dataValues.state);
+      let zip =userProfile.dataValues.zip
+      /////////////////////////////////////////////////////
+      //////////////////////////////////////////////////////////  
+      for(let a =0; a <find.length; a++){
+      /////////////////////////////////////////////////
+      let id = find[a].seller_id
+      console.log(JSON.stringify(find[a]))
+      let sellerProfile = await db.seller_profile.findOne({
+        where: {seller_id : id} 
+      })
+      ///////////////get seller ADRESS details to run the API////////////////
+      let streetSeller = plusWord(sellerProfile.dataValues.street);
+      let citySeller = plusWord(sellerProfile.dataValues.city);
+      let stateSeller = plusWord(sellerProfile.dataValues.state);
+      let zipSeller =sellerProfile.dataValues.zip
+      let distanceURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+street+"+"+city+","+state+"+"+zip+"&destinations="+streetSeller+"+"+citySeller+","+stateSeller+"+"+zipSeller+"&key="+API_KEY;
+      ////////////////////////////////////////////////////////
+   await axios.get(distanceURL )
+   .then(async response => {
+     let apiResults = await response.data.rows[0].elements[0].distance.text
+     let reso = await apiResults.slice(0,apiResults.length-3);
+     distance = await parseFloat(reso)
+     console.log('##########&&&&&&&&'+distance);
+     return distance;
+   }).catch(err=>{console.log(err)
+    res.render('error')});
+      if(distance < range) {
+        //pulls seller's address
+         find[a].seller_street = await sellerProfile.street
+         find[a].seller_city = await sellerProfile.city
+         find[a].seller_state = await sellerProfile.state
+         find[a].seller_zip = await sellerProfile.zip
+         find[a].seller_website = await sellerProfile.website
+         found=found.concat(find[a]) 
+         //////////////////////////////////////////////////////
+      }
+    }
+  }else{
+  } 
+  }
+    res.render('finds', {found})  
+  })
+```
