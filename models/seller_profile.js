@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     zip: DataTypes.INTEGER,
+    
     open_at: DataTypes.INTEGER,
     closes_at: DataTypes.INTEGER,
     website: DataTypes.STRING

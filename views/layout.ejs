@@ -1,89 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Famished</title>
-    <link rel="stylesheet" href="/css/style.css">
-  </head>
-  <body>
-    <%- include('partials/alerts') %>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik+Mono+One&display=swap');
-     body {
-       background-image: url('https://imgix.ranker.com/list_img_v2/1749/2521749/original/delicious-anime-food-u1?w=817&h=427&fm=jpg&q=50&fit=crop');
-       background-repeat: no-repeat;
-       
-       background-size: cover;
-     }
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <title>Famished</title>
+       <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body>
+        <%- include('partials/alerts') %>
+        <style>
+     
+            body {
+              background-image: url('https://imgix.ranker.com/list_img_v2/1749/2521749/original/delicious-anime-food-u1?w=817&h=427&fm=jpg&q=50&fit=crop');
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
 
-    
-     h1 {
+            h1 {
+              text-align:center;
+              font-size: 160px;
+              color:antiquewhite;
+              font-family: 'Rubik Mono One', sans-serif;
+            }
+
+            header {
+              text-align: center;
+            }
+
+            li {
+              padding: 0 50px;
+              font-family: 'Lalezar', cursive;
+              font-weight: 900;
+              display: inline;
+            }
+
+            .upthere {
+              font-weight: 900;
+              font-size: 50px;
+              color: whitesmoke;
+              margin: auto;  
+            }
+
+            .redLetter {
+              display: inline; 
+            }
+
+            #famished{
+              margin:auto;
+              width: 80%;
+              padding-right: 10%;
+              padding-left: 10%;
+              background-color: rgba(222, 184, 135, 0.705);
+              border-radius: 10px;
+            }
+
+            #thisIsM{
+              color: rgba(214, 88, 65, 0.658);
+              padding-left: 1%;
+              padding-left: 1%;
+            }
       
-       text-align:center;
-       font-size: 160px;
-       color:antiquewhite;
-       
-       font-family: 'Rubik Mono One', sans-serif;
-     }
+        </style>
 
-     #famished{
-       margin:auto;
-       width: 80%;
-       padding-right: 10%;
-       padding-left: 10%;
-       background-color: rgba(222, 184, 135, 0.705);
-       border-radius: 10px;
-     }
-
-     #thisIsM{
-       color: rgba(214, 88, 65, 0.658);
-       padding-left: 1%;
-       padding-left: 1%;
-     }
-
-     .upthere {
-       font-weight: 900;
-       font-size: 50px;
-       color: whitesmoke;
-       margin: auto;
-       
-     }
-
-     header {
-       text-align: center;
-     }
-
-     li {
-       padding: 0 50px;
-       font-family: 'Lalezar', cursive;
-       font-weight: 900;
-       display: inline;
-     }
-    .redLetter {
-     display: inline;
-  
-  
-}
-    </style>
-    <header>
-      <nav>
-        <ul>
-          <% if (!currentUser) { %>
-            <li><a class="upthere" href="/auth/signup">Get Started</a></li>
-            <li><a class="upthere"href="/auth/login">Log In</a></li>
-          <% } else {%>
-            <li><a class="upthere" href="/auth/logout">Logout</a></li>
-            <li><a class="upthere" href="/profile">Profile</a></li>
-          <% } %>
-        </ul>
-      </nav>
-    </header>
-    <div id="famished">
-    <h1 class="redLetter">Fa</h1><h1 id="thisIsM" class="redLetter">m</h1><h1 class="redLetter">ished</h1>
-  </div>
-
-    <%- body %>
-  </body>
+        <header>
+          <nav>
+             <ul>
+                <% if (!currentUser) { %>
+                <li><a class="upthere" href="/auth/signup">Get Started</a></li>
+                <li><a class="upthere"href="/auth/login">Log In</a></li>
+                <% } else {%>
+                <li><a class="upthere" href="/auth/logout">Logout</a></li>
+                <li><a class="upthere" href="/profile">Profile</a></li>
+                <% } %>
+             </ul>
+          </nav>
+        </header>
+        <div id="famished">
+          <h1 class="redLetter">Fa</h1>
+          <h1 id="thisIsM" class="redLetter">m</h1>
+          <h1 class="redLetter">ished</h1>
+        </div>
+        <%- body %>
+    </body>
 </html>

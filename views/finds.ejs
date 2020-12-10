@@ -1,79 +1,73 @@
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Rubik+Mono+One&display=swap');
+
+h3 {
+  text-align:center;
+  font-size: 90px;
+  color:antiquewhite;
+  background-color: rgba(55, 87, 65, 0.295);
+  font-family: 'Mukta', sans-serif;
+}
+
 img {
-    
-   
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 100%;
-    
-}
-
-#seller {
-   
-    margin: 2%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 100%;
-    flex:20%;
-}
-
-#thankyou {
-    flex: 80%;
-    margin-left: 6%;
-    margin-top: 6%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 100%;   
 }
 
 ul {
-    list-style-type: none;
-    display: inline;
+  list-style-type: none;
+  display: inline;
 }
 
 .vendorfood {
-   
-    background-color: rgba(86, 67, 88, 0.329);
-     display: inline-block;
-     width:24%;
-      text-align: center;
-      padding-bottom: 5%;
-      border-radius: 10px;
-      font-family: 'Lalezar', cursive;
-      color:rgb(255, 255, 255);
-      border: solid 4px rgba(190, 51, 104, 0.158);
-      font-size: 22px;
-      font-weight: 500;
+  background-color: rgba(86, 67, 88, 0.329);
+  display: inline-block;
+  width:24%;
+  text-align: center;
+  padding-bottom: 5%;
+  border-radius: 10px;
+  font-family: 'Mukta', sans-serif;
+  color:rgb(255, 255, 255);
+  border: solid 4px rgba(190, 51, 104, 0.158);
+  font-size: 22px;
+  font-weight: 500;
 }
 
-h3 {
-       text-align:center;
-       font-size: 90px;
-       color:antiquewhite;
-       background-color: rgba(55, 87, 65, 0.295);
-       font-family: 'Rubik Mono One', sans-serif;
-     }
-    
- .foodProperty {
-     display: block;
- }  
- 
- #topsplit{
-     display: flex;
-     position: relative;
-    
-     border-radius: 10px;
-     background-color: rgba(79, 91, 201, 0.404);
+.foodProperty {
+  display: block;
+ } 
+
+#seller {
+  margin: 2%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 100%;
+  flex:20%;
+}
+
+#thankyou {
+  flex: 80%;
+  margin-left: 6%;
+  margin-top: 6%;
+}
+
+#topsplit{
+  display: flex;
+  position: relative;
+  border-radius: 10px;
+  background-color: rgba(79, 91, 201, 0.404);
  }
+
 #today{
-    margin-top: 7%;
-    margin-bottom: 7%;
+  margin-top: 7%;
+  margin-bottom: 7%;
 }
  
 #results {
-    display: flex;
-    position: relative;
+  display: flex;
+  position: relative;
 }
 
 </style>
@@ -82,29 +76,27 @@ h3 {
 <div id="results">
 <% found.forEach((p)=>{ %>
     <div class="vendorfood">
-    <div id="topsplit">
-    <img id="seller" src="<%= p.seller_image %>" /> 
-<ul>
-    <li class="foodProperty" id="thankyou">Thank you for looking up: <%= p.seller_name %></li>
-</div>
-    <li class="foodProperty" id="today">Today we are offering:</li>
-    <li class="foodProperty"><%= p.type%></li>
-    <img src="<%= p.type_image %>"/> 
-    
-    <li class="foodProperty">Discription: <%= p.type_info %></li>
-    <li class="foodProperty">Price: $<%= p.price %></li>
-    <li class="foodProperty">Vendor Bio: <%= p.seller_info %></li>
-    <li class="foodProperty">Location:</li>
-    <li class="foodProperty">Street: <%= p.seller_street %></li>
-    <li class="foodProperty">City: <%= p.seller_city %></li>
-    <li class="foodProperty">State: <%= p.seller_state %></li>
-    <li class="foodProperty">NY: <%= p.seller_zip %></li>
-    <li class="foodProperty">Hours:</li>
-    <li class="foodProperty">opens at: <%= p.seller_open %></li>
-    <li class="foodProperty">closes at: <%= p.seller_close %></li>
-</ul>
-     <a href="<%= p.seller_website %>"><%= p.seller_website %></a>
+       <div id="topsplit">
+             <img id="seller" src="<%= p.seller_image %>" /> 
+       <ul>
+              <li class="foodProperty" id="thankyou">Thank you for looking up: <%= p.seller_name %></li>
+       </div>
+          <li class="foodProperty" id="today">Today we are offering:</li>
+          <li class="foodProperty"><%= p.type%></li>
+          <img src="<%= p.type_image %>"/> 
+          <li class="foodProperty">Discription: <%= p.type_info %></li>
+          <li class="foodProperty">Price: $<%= p.price %></li>
+          <li class="foodProperty">Vendor Bio: <%= p.seller_info %></li>
+          <li class="foodProperty">Location:</li>
+          <li class="foodProperty">Street: <%= p.seller_street %></li>
+          <li class="foodProperty">City: <%= p.seller_city %></li>
+          <li class="foodProperty">State: <%= p.seller_state %></li>
+          <li class="foodProperty">NY: <%= p.seller_zip %></li>
+          <li class="foodProperty">Hours:</li>
+          <li class="foodProperty">opens at: <%= p.seller_open %></li>
+          <li class="foodProperty">closes at: <%= p.seller_close %></li>
+       </ul>
+       <a href="<%= p.seller_website %>"><%= p.seller_website %></a>
     </div>
 <% })  %> 
-
 </div>

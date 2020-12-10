@@ -113,10 +113,10 @@ app.get('/profile', isLoggedIn, (req, res) => {
     })
     .then(
       prof => {
-        let street = JSON.stringify(prof.street)
-        let city = JSON.stringify(prof.city)
-        let state = JSON.stringify(prof.state)
-        let zip = JSON.stringify(prof.zip)
+        let street = prof.street
+        let city = prof.city
+        let state = prof.state
+        let zip = prof.zip
         
 ////////////////////////////////////////////////////////////////////////
 db.items.findAll().then(finds => {
@@ -149,7 +149,7 @@ db.items.findAll().then(finds => {
 ///////////////////////////////FOR METHOD TO DISPLAY FINDS FOR THE USER///////////////////
 app.get('/profile/finds', async (req,res) => {
   let distance;
-  let range = 12;
+  let range = 2000;
     ////////////////////////////////////////////////////////////////////////////////////////
     //////////////////         Matching Options By Price              ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const picks = await db.user_wants.findAll({
@@ -187,23 +187,15 @@ app.get('/profile/finds', async (req,res) => {
       ////////////////////////////////////////////////////////
    await axios.get(distanceURL )
    .then(async response => {
-     let apiResults = await response.data.rows[0].elements[0].distance.text
-     let reso = await apiResults.slice(0,apiResults.length-3);
-     
-     let arr = reso.split('')
+     let apiResults = await response.data.rows[0].elements[0].distance.value
 
-     for(let i=0; i < arr.length; i++){
-       if(arr[i]===','){
-       
-       var removed =arr.splice(i,1)
-       console.log(arr)
-       }}
 
-       let noComma = arr.join('');
-       console.log(noComma)
      
      
-     distance = await parseFloat(noComma);
+     distance = apiResults;
+     if(distance === 0){
+       distance= distance+ 0.01;
+     }
      console.log('##########&&&&&&&&'+distance);
      return distance;
    }).catch(err=>{console.log(err)
